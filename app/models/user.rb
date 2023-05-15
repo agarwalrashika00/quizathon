@@ -7,4 +7,8 @@ class User < ApplicationRecord
   enum role: { participant: 0, admin: 1 }
 
   validates :first_name, presence: true
+
+  def confirmation_required?
+    !admin?
+  end
 end
