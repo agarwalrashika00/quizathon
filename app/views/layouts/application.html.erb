@@ -12,8 +12,12 @@
   </head>
   <body>
     <%= render 'shared/navbar' %>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
+    <div class='container-fluid float-left'>
+      <p class="notice"><%= notice %></p>
+      <% if alert %>
+        <div class="alert alert-warning text-center"><%= alert %></div>
+      <% end %>
+      <%= yield %>
+    </div>
   </body>
 </html>
