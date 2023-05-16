@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  skip_before_action :require_no_authentication, only: [:new, :create]
+  before_action :require_no_authentication, if: :current_user_is_participant?, only: [:new, :create, :cancel]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
@@ -15,9 +17,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def edit
+    self.resource = User.find(params[:id]) if params[:id] && current_user.admin?
+    super
+  end
 
   # PUT /resource
   # def update
@@ -25,9 +28,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # DELETE /resource
-  # def destroy
-  #   super
-  # end
+  def destroy
+    if params[:id] && current_user.admin?
+      User.find(params[:id]).destroy
+      flash[:alert] = 'User successfully deleted!'
+      redirect_back fallback_location: :root_path
+    else
+      super
+    end
+  end
 
   # GET /resource/cancel
   # Forces the session data which is usually expired after sign
@@ -59,4 +68,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)
   # end
+
+  private def current_user_is_participant?
+    current_user&.participant?
+  end
 end

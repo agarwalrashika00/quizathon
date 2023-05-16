@@ -11,10 +11,21 @@
     <%= favicon_link_tag asset_path('favicon.png') %>
   </head>
   <body>
-    <%= render 'shared/navbar' %>
-    <div class='container-fluid float-left'>
-      <%= render 'shared/flash' %>
-      <%= yield %>
-    </div>
-  </body>
-</html>
+    <div class='container-fluid float-left pl-0 pr-0'>
+      <div class="row">
+        <% if user_signed_in? %>
+          <div class="col-sm-1 no-float side-nav">
+            <%= render 'shared/side_navbar' %>
+          </div>
+          <div class="col-sm-11 no-float">
+          <% else %>
+            <div class="col-sm-12 no-float">
+            <% end %>
+            <%= render 'shared/navbar' %>
+            <%= render 'shared/flash' %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>

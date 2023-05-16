@@ -1,10 +1,6 @@
 namespace :admin do
   desc "creates admin"
   task new: :environment do
-    print "enter first name: "
-    first_name = STDIN.gets.chomp
-    print "enter last name: "
-    last_name = STDIN.gets.chomp
     print "enter email: "
     email = STDIN.gets.chomp
     print "enter password: "

@@ -1,0 +1,25 @@
+<div class="form">
+  <%= form_with model: @user, url: admin_users_path do |form| %>
+    <div class="field">
+      <%= form.text_field :first_name, placeholder: 'First name' %>
+    </div>
+    <div class="field">
+      <%= form.text_field :last_name, placeholder: 'Last name' %>
+    </div>
+    <div class="field">
+      <%= form.email_field :email, placeholder: 'Email' %>
+    </div>
+    <div class="field">
+      <%= form.password_field :password, placeholder: 'Password' %>
+    </div>
+    <div class="field">
+      <%= form.password_field :password_confirmation, placeholder: 'Password Confirmation' %>
+    </div>
+    <div class="field">
+      <%= form.select :role, [:participant, :admin], include_blank: 'Select role' %>
+    </div>
+    <div class="field action">
+      <%= form.submit %>
+    </div>
+  <% end %>
+</div>
