@@ -13,10 +13,21 @@
  *= require_tree .
  *= require_self
  */
- *{
+ * {
   box-sizing: border-box;
  }
- body{
+ body {
   margin-left: 10px;
   margin-right: 10px;
+  background: #83a4d4;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+.field {
+  margin-top: 1.3rem;
+}
+.card {
+  margin-top: 2rem;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
