@@ -28,14 +28,14 @@
 .field {
   margin-top: 1.3rem;
 }
-.field input {
-  width: 30%;
+.field .form-input {
+  width: 250px;
   padding: 6px 20px;
   margin: 0;
   box-sizing: border-box;
 }
 .field select{
-  width: 30%;
+  width: 250px;
   padding: 6px 20px;
   margin: 0;
   box-sizing: border-box;
@@ -48,13 +48,13 @@ html,body,.container-fluid {
   height:100%;
 }
 .container-fluid {
-  display:table;
+  display: table;
   width: 100%;
   padding: 0px;
   box-sizing: border-box;
 }
 .row {
-  height: 1000px;
+  height: 900px;
   display: table-row;
 }
 .row .no-float {
@@ -68,8 +68,19 @@ html,body,.container-fluid {
 }
 .side-nav {
   background-color: #19222a;
+  width: 100px;
+}
+a.side-navbar-logo {
+  margin-left: 25px;
+  font-size: 25px;
 }
 .form{
   margin: 10px;
   box-sizing: border-box;
+}
+.edit-form{
+  margin-left: 10px;
+}
+.error-div {
+  color: red;
 }
