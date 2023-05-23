@@ -13,15 +13,13 @@
  *= require_tree .
  *= require_self
  */
+ @import "bootstrap";
+
 * {
   box-sizing: border-box;
-  margin: 0px;
-  padding: 0px;
 }
 
 body {
-  margin-left: 0px;
-  margin-right: 0px;
   background: #83a4d4;
   /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
@@ -53,29 +51,29 @@ body {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-html,
-body,
-.container-fluid {
-  height: 100%;
-}
+// html,
+// body,
+// .container-fluid {
+//   height: 100%;
+// }
 
-.container-fluid {
-  display: table;
-  width: 100%;
-  padding: 0px;
-  box-sizing: border-box;
-}
+// .container-fluid {
+//   display: table;
+//   width: 100%;
+//   padding: 0px;
+//   box-sizing: border-box;
+// }
 
-.row {
-  height: 900px;
-  display: table-row;
-}
+// .row {
+//   height: 900px;
+//   display: table-row;
+// }
 
-.row .no-float {
-  display: table-cell;
-  float: none;
-  padding: 0px;
-}
+// .row .no-float {
+//   display: table-cell;
+//   float: none;
+//   padding: 0px;
+// }
 
 .table-hover tbody tr:hover td {
   background-color: powderblue;
@@ -91,10 +89,9 @@ a.side-navbar-logo {
   font-size: 25px;
 }
 
-.form {
-  margin: 10px;
-  box-sizing: border-box;
-}
+// .form {
+//   margin: 10px;
+// }
 
 .edit-form {
   margin-left: 10px;

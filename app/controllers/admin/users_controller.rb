@@ -1,5 +1,5 @@
 class Admin::UsersController < ApplicationController
-  before_action :verify_if_admin
+  before_action :ensure_is_admin
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
@@ -52,8 +52,8 @@ class Admin::UsersController < ApplicationController
     redirect_back fallback_location: root_path
   end
 
-  private def verify_if_admin
-    unless current_user.present? && current_user.role == 'admin'
+  private def ensure_is_admin
+    unless current_user.present? && current_user.admin?
       redirect_to root_path, alert: 'You donot have privileges to access this section'
     end
   end
