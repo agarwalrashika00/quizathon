@@ -5,7 +5,7 @@ namespace :admin do
     email = STDIN.gets.chomp
     print "enter password: "
     password = STDIN.noecho(&:gets).chomp
-    u = User.new(first_name: first_name, last_name: last_name, role: 'admin', email: email, password: password)
+    u = User.new(role: 'admin', email: email, password: password)
     if u.save
       puts "\n\ncreated new admin user"
     else

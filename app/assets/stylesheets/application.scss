@@ -13,63 +13,93 @@
  *= require_tree .
  *= require_self
  */
- * {
+* {
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
- }
- body {
+}
+
+body {
   margin-left: 0px;
   margin-right: 0px;
-  background: #83a4d4;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b6fbff, #83a4d4); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: #83a4d4;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #b6fbff, #83a4d4);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
+
 .field {
   margin-top: 1.3rem;
 }
-.field input {
-  width: 30%;
+
+.field .form-input {
+  width: 250px;
   padding: 6px 20px;
   margin: 0;
   box-sizing: border-box;
 }
-.field select{
-  width: 30%;
+
+.field select {
+  width: 250px;
   padding: 6px 20px;
   margin: 0;
   box-sizing: border-box;
 }
+
 .card {
   margin-top: 2rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
-html,body,.container-fluid {
-  height:100%;
-}
+
+html,
+body,
 .container-fluid {
-  display:table;
+  height: 100%;
+}
+
+.container-fluid {
+  display: table;
   width: 100%;
   padding: 0px;
   box-sizing: border-box;
 }
+
 .row {
-  height: 1000px;
+  height: 900px;
   display: table-row;
 }
+
 .row .no-float {
   display: table-cell;
   float: none;
   padding: 0px;
 }
-.table-hover tbody tr:hover td  
-{  
-  background-color:powderblue;
+
+.table-hover tbody tr:hover td {
+  background-color: powderblue;
 }
+
 .side-nav {
   background-color: #19222a;
+  width: 100px;
 }
-.form{
+
+a.side-navbar-logo {
+  margin-left: 25px;
+  font-size: 25px;
+}
+
+.form {
   margin: 10px;
   box-sizing: border-box;
+}
+
+.edit-form {
+  margin-left: 10px;
+}
+
+.error-div {
+  color: red;
 }
