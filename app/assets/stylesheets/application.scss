@@ -20,15 +20,6 @@
   overflow: hidden;
 }
 
-body {
-  background: #83a4d4;
-  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #b6fbff, #83a4d4);
-  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #b6fbff, #83a4d4);
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-
 .field {
   margin-top: 1.3rem;
 }
@@ -71,4 +62,28 @@ a.side-navbar-logo {
 
 .error-div {
   color: red;
+}
+
+.body-row{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  overflow: hidden;
+  margin-left: 0px;
+  margin-right: 0px;
+  box-sizing: border-box;
+}
+.body-row {
+  width: 100%;
+  td{
+  width: 25%;
+  display: block;
+  overflow: hidden;
+  }
+  th{
+    width: 25%;
+  }
+  .ransack-col{
+    overflow: hidden;
+  }
 }

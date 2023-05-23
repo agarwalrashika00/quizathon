@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable
+         :recoverable, :rememberable, :validatable, :confirmable, :trackable
 
   enum role: { participant: 0, admin: 1 }
 
@@ -10,5 +10,13 @@ class User < ApplicationRecord
 
   def confirmation_required?
     !admin?
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "email", "first_name", "id", "last_name", "notification_preferences", "role", "last_sign_in_at", 'blocked', 'confirmed_at']
+  end
+
+  def self.ransackable_associations(auth_obj = nil)
+    []
   end
 end
