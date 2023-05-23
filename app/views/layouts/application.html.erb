@@ -5,16 +5,26 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= favicon_link_tag asset_path('favicon.png') %>
   </head>
   <body>
-    <%= render 'shared/navbar' %>
-    <div class='container-fluid float-left'>
-      <%= render 'shared/flash' %>
-      <%= yield %>
-    </div>
-  </body>
-</html>
+    <div class='container-fluid float-left pl-0 pr-0'>
+      <div class="row">
+        <% if user_signed_in? %>
+          <div class="col-xs-1 no-float side-nav">
+            <%= render 'shared/side_navbar' %>
+          </div>
+          <div class="col-xs-11 no-float">
+          <% else %>
+            <div class="col-xs-12 no-float">
+            <% end %>
+            <%= render 'shared/navbar' %>
+            <%= render 'shared/flash' %>
+            <%= yield %>
+          </div>
+        </div>
+      </div>
+    </body>
+  </html>

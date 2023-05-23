@@ -9,6 +9,8 @@ gem 'rails', '~> 7.0.4', '>= 7.0.4.3'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '~> 1.16.0', require: false
 
+gem 'bootstrap', '~> 4.2.1'
+
 gem 'devise', '~> 4.9.2'
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]

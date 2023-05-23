@@ -1,8 +1,7 @@
 <center>
   <div class="card" style="width: 20rem">
     <h2 class="card-header">Sign up</h2>
-    <% controller.class == Admin::RegistrationsController ? url = admin_path : url = user_registration_path %>
-    <%= form_for(resource, as: resource_name, url: url) do |f| %>
+    <%= form_for(resource, as: resource_name, url: user_registration_path) do |f| %>
       <%= render "users/shared/error_messages", resource: resource %>
       <div class="field">
         <%= f.text_field :first_name, autofocus: true, placeholder: 'First name' %>
@@ -23,7 +22,7 @@
       <div class="field">
         <%= f.password_field :password_confirmation, autocomplete: "new-password", required: true, placeholder: 'Password Confirmation' %>
       </div>
-      <%= f.hidden_field :role, value: ( controller.class == Admin::RegistrationsController ? 'admin' : 'participant' ) %>
+      <%= f.hidden_field :role, value: 'participant' %>
       <br>
       <div class="actions">
         <%= f.submit "Sign up", class: 'btn btn-primary' %>

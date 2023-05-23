@@ -1,15 +1,11 @@
 namespace :admin do
   desc "creates admin"
   task new: :environment do
-    print "enter first name: "
-    first_name = STDIN.gets.chomp
-    print "enter last name: "
-    last_name = STDIN.gets.chomp
     print "enter email: "
     email = STDIN.gets.chomp
     print "enter password: "
     password = STDIN.noecho(&:gets).chomp
-    u = User.new(first_name: first_name, last_name: last_name, role: 'admin', email: email, password: password)
+    u = User.new(role: 'admin', email: email, password: password)
     if u.save
       puts "\n\ncreated new admin user"
     else
