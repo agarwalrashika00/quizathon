@@ -36,13 +36,10 @@ class Admin::UsersController < ApplicationController
     else
       u_params = user_params.except(:password, :password_confirmation)
     end
-    respond_to do |format|
-      if @user.update(u_params)
-        format.html { redirect_to :admin_users, notice: "User #{@user.first_name} was successfully updated." }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.update(u_params)
+      redirect_to :admin_users, notice: "User #{@user.first_name} was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -52,9 +49,7 @@ class Admin::UsersController < ApplicationController
     else
       flash[:alert] = 'User cannot be destroyed.'
     end
-    respond_to do |format|
-      format.html { redirect_back fallback_location: root_path }
-    end
+    redirect_back fallback_location: root_path
   end
 
   private def verify_if_admin
@@ -68,6 +63,8 @@ class Admin::UsersController < ApplicationController
   end
   
   private def set_user
-    @user = User.find(params[:id])
+    unless @user = User.find_by(id: params[:id])
+      redirect_to admin_users_path, alert: 'User doesnot exist'
+    end
   end
 end
