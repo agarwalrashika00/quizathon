@@ -13,10 +13,11 @@
  *= require_tree .
  *= require_self
  */
- @import "bootstrap";
+@import "bootstrap";
 
 * {
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 body {
@@ -51,47 +52,18 @@ body {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
 }
 
-// html,
-// body,
-// .container-fluid {
-//   height: 100%;
-// }
-
-// .container-fluid {
-//   display: table;
-//   width: 100%;
-//   padding: 0px;
-//   box-sizing: border-box;
-// }
-
-// .row {
-//   height: 900px;
-//   display: table-row;
-// }
-
-// .row .no-float {
-//   display: table-cell;
-//   float: none;
-//   padding: 0px;
-// }
-
 .table-hover tbody tr:hover td {
   background-color: powderblue;
 }
 
 .side-nav {
   background-color: #19222a;
-  width: 100px;
 }
 
 a.side-navbar-logo {
   margin-left: 25px;
   font-size: 25px;
 }
-
-// .form {
-//   margin: 10px;
-// }
 
 .edit-form {
   margin-left: 10px;

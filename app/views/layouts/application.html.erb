@@ -10,8 +10,8 @@
     <%= favicon_link_tag asset_path('favicon.png') %>
   </head>
   <body>
-    <div class='container-fluid float-left pl-0 pr-0'>
-      <div class="row">
+    <div class='container-fluid float-left'>
+      <div class="row w-100">
         <% if user_signed_in? %>
           <div class="col-xs-1 no-float side-nav">
             <%= render 'shared/side_navbar' %>

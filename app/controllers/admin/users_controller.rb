@@ -1,5 +1,4 @@
-class Admin::UsersController < ApplicationController
-  before_action :ensure_is_admin
+class Admin::UsersController < Admin::BaseController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
@@ -13,21 +12,11 @@ class Admin::UsersController < ApplicationController
   def create
     @user = User.new(user_params)
 
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to admin_users_path, notice: 'User created successfully' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    if @user.save
+      redirect_to admin_users_path, notice: 'User created successfully'
+    else
+      render :new, status: :unprocessable_entity
     end
-  end
-
-  def show
-    render :new
-  end
-
-  def edit
   end
 
   def update
@@ -49,13 +38,7 @@ class Admin::UsersController < ApplicationController
     else
       flash[:alert] = 'User cannot be destroyed.'
     end
-    redirect_back fallback_location: root_path
-  end
-
-  private def ensure_is_admin
-    unless current_user.present? && current_user.admin?
-      redirect_to root_path, alert: 'You donot have privileges to access this section'
-    end
+    redirect_to :admin_users
   end
 
   private def user_params

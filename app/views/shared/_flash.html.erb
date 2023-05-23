@@ -1,6 +1,9 @@
-<% if notice %>
-  <div class="notice"><%= notice %></div>
-<% end %>
-<% if alert %>
-  <div class="alert alert-warning text-center"><%= alert %></div>
-<% end %>
+<% if flash.any? %>
+  <div id="flash">
+    <% flash.each do |key, value| %>
+      <p class="alert alert-warning text-center">
+        <%= value %>
+      </p>
+    <% end %>
+  </div>
+<% end%>

@@ -22,7 +22,7 @@ gem 'importmap-rails', '~> 1.1.6'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder', '~> 2.11.5'
 
-gem 'mailcatcher', '~> 0.2.4'
+gem "letter_opener", :group => :development
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'

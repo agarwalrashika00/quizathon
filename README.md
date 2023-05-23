@@ -34,3 +34,18 @@ bundle exec rails server
 
 ## To visit user
 * Go to http://localhost:3000
+
+## sign up for user
+* Go to http://localhost:3000/sign_up
+
+## sign in for user
+* Go to http://localhost:3000/sign_in
+
+## To visit admin end
+* Go to http://localhost:3000/admin
+
+## sign in for admin
+* Go to http://localhost:3000/admin/sign_in
+
+## view all users for admin
+* Go to http://localhost:3000/admin/users
