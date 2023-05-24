@@ -1,0 +1,15 @@
+<tr class="h-50 body-row">
+  <td><%= genre.title %></td>
+  <td><%= genre.description %></td>
+  <td><%= genre.super_genre&.title %></td>
+  <td>
+    <%= link_to '&#x270D;'.html_safe, edit_admin_genre_path(genre), class: 'btn btn-info', title: 'edit' %>
+    <%= link_to '&#x2716;'.html_safe, admin_genre_path(genre), data: {
+          turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class: 'btn btn-danger', title: 'delete' %>
+    <% if genre.active? %>
+      <%= button_to 'inactivate', inactivate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark', title: 'inactivate' %>
+    <% else %>
+      <%= button_to 'activate', activate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark', title: 'activate' %>
+    <% end %>
+  </td>
+</tr>

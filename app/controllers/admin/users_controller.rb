@@ -1,5 +1,7 @@
 class Admin::UsersController < Admin::BaseController
+
   include Controllers::Blockable
+
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index

@@ -1,0 +1,17 @@
+<%= render 'shared/errors', model: genre %>
+<div class="form ml-2">
+  <%= form_with model: [:admin, genre] do |form| %>
+    <div class="field">
+      <%= form.text_field :title, placeholder: 'Title', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.text_area :description, placeholder: 'Description', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.collection_select :super_genre_id, Genre.order(:title), :id, :title, include_blank: 'Select super genre' %>
+    </div>
+    <div class="field action">
+      <%= form.submit class: 'btn btn-dark' %>
+    </div>
+  <% end %>
+</div>

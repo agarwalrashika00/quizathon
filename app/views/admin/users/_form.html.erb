@@ -1,5 +1,5 @@
 <%= render 'shared/errors', model: user %>
-<div class="form">
+<div class="form ml-2">
   <%= form_with model: [:admin, user] do |form| %>
     <div class="field">
       <%= form.text_field :first_name, placeholder: 'First name', class: 'form-input' %>

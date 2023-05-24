@@ -19,6 +19,11 @@ Rails.application.routes.draw do
       patch 'block', on: :member
       patch 'unblock', on: :member
     end
+
+    resources :genres, param: :slug do
+      patch 'activate', on: :member
+      patch 'inactivate', on: :member
+    end
   end
 
   resources :users, only: [:show, :edit, :update], path: '/', path_names: {show: 'profile', edit: 'profile/edit'}
