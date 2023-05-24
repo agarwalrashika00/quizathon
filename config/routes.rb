@@ -16,13 +16,24 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :users do
-      patch 'block', on: :member
-      patch 'unblock', on: :member
+      member do 
+        patch 'block'
+        patch 'unblock'
+      end
     end
 
     resources :genres, param: :slug do
-      patch 'activate', on: :member
-      patch 'inactivate', on: :member
+      member do 
+        patch 'activate'
+        patch 'inactivate'
+      end
+    end
+
+    resources :questions, param: :slug do
+      member do
+        patch 'activate'
+        patch 'inactivate'
+      end
     end
   end
 
