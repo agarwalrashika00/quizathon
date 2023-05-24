@@ -10,6 +10,13 @@
     <div class="field">
       <%= form.number_field :score, placeholder: 'Score' %>
     </div>
+    <div class="field">
+      <h2>Options</h2>
+      <%= form.fields_for :question_options do |options_form| %>
+        <%= render 'question_option_fields', f: options_form, object: options_form.object %>
+      <% end %>
+      <%= link_to_add_fields "Add Option", form, :question_options %>
+    </div>
     <div class="field action">
       <%= form.submit class: 'btn btn-dark' %>
     </div>

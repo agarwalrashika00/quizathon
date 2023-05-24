@@ -1,0 +1,24 @@
+<fieldset>
+  <div class="card pl-2 w-50">
+    <div class="field">
+      <%= f.text_field :data, placeholder: 'Data' %>
+      <h5>OR</h5>
+      <% if object.option_image.present? %>
+        <%= image_tag object.option_image %>
+        <p>Choose another image to change this one</p>
+      <% end %>
+      <%= f.file_field :option_image %>
+    </div>
+    <div class="field">
+      <%= f.label :correct %>
+      <%= f.check_box :correct %>
+    </div>
+    <div class="field">
+      <%= f.label :_destroy %>
+      <%= f.check_box :_destroy %>
+    </div>
+  </div>
+  <% if object.new_record? %>
+    <%= link_to "Remove Option", '#', class: "remove_fields", data: {id: object.object_id} %>
+  <% end %>
+</fieldset>

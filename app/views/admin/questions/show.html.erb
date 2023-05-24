@@ -1,0 +1,24 @@
+<%= javascript_include_tag 'render_correct_option' %>
+<div class="ml-2">
+  <h3><%= @question.title %></h3>
+  <p><%= @question.description %></p>
+  <div class="ml-4">
+    <% @question.question_options.each_with_index do |option, index| %>
+      <%= "#{index + 1}. " %>
+      <% if option.option_image.present? %>
+        <%= image_tag option.option_image, width: '80px' %>
+      <% else %>
+        <%= option.data %>
+      <% end %>
+      <br>
+    <% end %>
+  </div>
+  <div class="field">
+    <button class="btn-success" id="correctOptionButton" onclick="renderCorrectOption()">
+      Show Correct Option
+    </button>
+    <p id="correctOption" style="display: none">
+      <%= render('correct_option', question: @question) %>
+    </p>
+  </div>
+</div>
