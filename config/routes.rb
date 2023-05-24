@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   root 'home#index'
 
   namespace :admin do
-    resources :users
+    resources :users do
+      patch 'block', on: :member
+      patch 'unblock', on: :member
+    end
   end
 end

@@ -30,7 +30,7 @@ class Admin::SessionsController < Devise::SessionsController
     when 'participant'
       root_path
     when 'admin'
-      admin_path
+      admin_users_path
     else
       super
     end
