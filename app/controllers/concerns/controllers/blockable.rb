@@ -1,4 +1,4 @@
-module BlockUnblock
+module Controllers::Blockable
 
   extend ActiveSupport::Concern
 

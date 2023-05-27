@@ -1,4 +1,4 @@
-module ModelBlockUnblock
+module Models::Blockable
 
   extend ActiveSupport::Concern
 

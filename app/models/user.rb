@@ -1,6 +1,6 @@
 class User < ApplicationRecord
 
-  include ModelBlockUnblock
+  include Models::Blockable
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
