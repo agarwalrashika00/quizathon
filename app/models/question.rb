@@ -5,6 +5,8 @@ class Question < ApplicationRecord
 
   has_many :question_options, dependent: :destroy
   accepts_nested_attributes_for :question_options, allow_destroy: true
+  has_many :quiz_questions, dependent: :destroy
+  has_many :quizzes, through: :quiz_questions
 
   validates :title, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
@@ -41,9 +43,11 @@ class Question < ApplicationRecord
   end
 
   def options_count
-    unless question_options.size == 4
-      errors.add :base, 'enter exactly 4 options'
+    count = question_options.size
+    question_options.each do |option|
+      count -= 1 if option.marked_for_destruction?
     end
+    errors.add :base, 'enter exactly 4 options' unless count == 4
   end
 
 end

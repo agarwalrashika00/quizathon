@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_26_092430) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_30_063428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,6 +53,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_092430) do
     t.index ["super_genre_id"], name: "index_genres_on_super_genre_id"
   end
 
+  create_table "genres_quizzes", id: false, force: :cascade do |t|
+    t.bigint "genre_id", null: false
+    t.bigint "quiz_id", null: false
+    t.index ["genre_id", "quiz_id"], name: "index_genres_quizzes_on_genre_id_and_quiz_id"
+    t.index ["quiz_id", "genre_id"], name: "index_genres_quizzes_on_quiz_id_and_genre_id"
+  end
+
   create_table "question_options", force: :cascade do |t|
     t.bigint "question_id"
     t.string "type"
@@ -70,6 +77,29 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_092430) do
     t.string "description"
     t.boolean "active", default: true
     t.integer "score"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "quiz_questions", force: :cascade do |t|
+    t.bigint "quiz_id"
+    t.bigint "question_id"
+    t.boolean "active", default: true
+    t.index ["question_id", "quiz_id"], name: "index_quiz_questions_on_question_id_and_quiz_id"
+    t.index ["question_id"], name: "index_quiz_questions_on_question_id"
+    t.index ["quiz_id", "question_id"], name: "index_quiz_questions_on_quiz_id_and_question_id"
+    t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
+  end
+
+  create_table "quizzes", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "title", null: false
+    t.string "description"
+    t.integer "time_limit_in_seconds"
+    t.integer "level"
+    t.boolean "active", default: false
+    t.datetime "featured_at", precision: nil
+    t.bigint "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -105,4 +135,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_26_092430) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "genres", "genres", column: "super_genre_id"
   add_foreign_key "question_options", "questions"
+  add_foreign_key "quiz_questions", "questions"
+  add_foreign_key "quiz_questions", "quizzes"
+  add_foreign_key "quizzes", "users", column: "created_by"
 end

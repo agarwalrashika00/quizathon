@@ -43,7 +43,7 @@
 }
 
 .table-hover tbody tr:hover td {
-  background-color: powderblue;
+  background-color: #DDEFFE;
 }
 
 .side-nav {
@@ -85,4 +85,8 @@ a.side-navbar-logo {
   .ransack-col{
     overflow: hidden;
   }
+}
+
+.button_to {
+  display: inline;
 }

@@ -1,6 +1,6 @@
 <%= javascript_include_tag 'render_correct_option' %>
 <div class="ml-2">
-  <h3><%= @question.title %></h3>
+  <h4><%= @question.title %></h4>
   <p><%= @question.description %></p>
   <div class="ml-4">
     <% @question.question_options.each_with_index do |option, index| %>
@@ -17,8 +17,8 @@
     <button class="btn-success" id="correctOptionButton" onclick="renderCorrectOption()">
       Show Correct Option
     </button>
-    <p id="correctOption" style="display: none">
-      <%= render('correct_option', question: @question) %>
+    <p id="correctOption" style="display: none" class="mt-2">
+      <%= render('admin/questions/correct_option', question: @question) %>
     </p>
   </div>
 </div>

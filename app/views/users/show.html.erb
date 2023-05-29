@@ -11,7 +11,7 @@
           <div class="card-body text-center">
             <h5 class="card-title profile-name"><%= "#{@user.first_name} #{@user.last_name}" %></h5>
             <p class="card-text profile-bio">This is your profile quiz master!</p>
-            <%= link_to 'Edit', edit_user_path(@user), class: "btn btn-primary profile-button" %>
+            <%= link_to 'Edit', edit_user_path, class: "btn btn-primary profile-button" %>
           </div>
         </div>
       </div>

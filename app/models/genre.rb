@@ -5,6 +5,7 @@ class Genre < ApplicationRecord
 
   belongs_to :super_genre, class_name: 'Genre', optional: true
   has_many :sub_genres, class_name: 'Genre', foreign_key: 'super_genre_id'
+  has_and_belongs_to_many :quizzes
 
   validates :title, uniqueness: { scope: :super_genre_id }, presence: true
   validates :slug, presence: true, uniqueness: true

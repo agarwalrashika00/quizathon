@@ -1,12 +1,17 @@
 function renderCorrectOption() {
-  var x = document.getElementById("correctOption");
-  if (x.style.display === "none") {
-    x.style.display = "block";
-    document.getElementById("correctOptionButton").innerHTML = "Hide Correct Option"
-    document.getElementById("correctOptionButton").className = "btn-danger"
-  } else {
-    x.style.display = "none";
-    document.getElementById("correctOptionButton").innerHTML = "Show Correct Option"
-    document.getElementById("correctOptionButton").className = "btn-success"
+  var x = event.srcElement.nextElementSibling
+  while(x) {
+    if(x.matches('#correctOption')) {
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        event.srcElement.innerHTML = "Hide Correct Option"
+        event.srcElement.className = "btn-danger"
+      } else {
+        x.style.display = "none";
+        event.srcElement.innerHTML = "Show Correct Option"
+        event.srcElement.className = "btn-success"
+      }
+    }
+    x = x.nextElementSibling
   }
 }

@@ -1,0 +1,16 @@
+<tr class="h-50 body-row">
+  <td><%= quiz.title %></td>
+  <td><%= quiz.description %></td>
+  <td><%= quiz.time_limit_in_seconds.to_i / 60 %></td>
+  <td><%= quiz.level %></td>
+  <td>
+    <%= link_to image_tag('view.png'), admin_quiz_path(quiz) %>
+    <%= link_to image_tag('edit.png'), edit_admin_quiz_path(quiz), title: 'edit' %>
+    <%= button_to image_tag('delete.png'), admin_quiz_path(quiz), method: :delete, class: 'border-0 bg-transparent', title: 'delete' %>
+    <% if quiz.active? %>
+      <%= button_to 'inactivate', inactivate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark', title: 'inactivate' %>
+    <% else %>
+      <%= button_to 'activate', activate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark', title: 'activate' %>
+    <% end %>
+  </td>
+</tr>
