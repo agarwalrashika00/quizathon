@@ -15,9 +15,9 @@
     <div class="row">
       <div class="col-md-3">
         <% if @quiz.quiz_banner.present? %>
-          <%= image_tag @quiz.quiz_banner, width: '120px', class: 'ml-5 mt-3' %>
+          <%= image_tag @quiz.quiz_banner, width: '105px', class: 'ml-5 mt-3' %>
         <% else %>
-          <%= image_tag 'quiz_banner.jpg', width: '120px', class: 'ml-5 mt-3' %>
+          <%= image_tag 'quiz_banner.jpg', width: '105px', class: 'ml-5 mt-3' %>
         <% end %>
       </div>
       <div class="col-md-9">
@@ -29,8 +29,12 @@
           </div>
         <% end %>
         <div class='mt-1'>
-          <b>Take quiz</b>
-          <%= link_to image_tag('play.png', width: '30px'), '#' %>
+          <% if current_user && has_completed(current_user, @quiz) %>
+            <div class='btn btn-info'>Score: <%= compute_score(current_user, @quiz) %></div>
+          <% else %>
+            <b>Take quiz</b>
+            <%= button_to image_tag('play.png', width: '30px'), start_quiz_path(@quiz), method: 'put', class: 'border-0 bg-transparent' %>
+          <% end %>
         </div>
       </div>
     </div>
