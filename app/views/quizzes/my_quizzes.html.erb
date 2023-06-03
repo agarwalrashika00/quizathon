@@ -1,0 +1,4 @@
+<% @quiz_runners.each do |quiz_runner| %>
+  <% @quiz = quiz_runner.quiz %>
+  <%= render template: 'quizzes/show' %>
+<% end %>

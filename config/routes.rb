@@ -58,6 +58,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    get 'my_quizzes', on: :collection
   end
 
   get '/profile', to: 'users#show'

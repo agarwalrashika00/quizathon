@@ -36,6 +36,10 @@ class QuizzesController < ApplicationController
     end
   end
 
+  def my_quizzes
+    @quiz_runners = QuizRunner.where(user: current_user)
+  end
+
   private
 
   def set_quiz
