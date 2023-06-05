@@ -1,0 +1,18 @@
+<fieldset>
+  <div class="card pl-2 w-50">
+    <div class="field">
+      <%= f.select :question_id, Question.pluck(:description, :id), include_blank: true %>
+    </div>
+    <div class="field">
+      <%= f.label :active %>
+      <%= f.check_box :active %>
+    </div>
+    <div class="field">
+      <%= f.label :_destroy %>
+      <%= f.check_box :_destroy %>
+    </div>
+  </div>
+  <% if object.new_record? %>
+    <%= link_to "Remove Option", '#', class: "remove_fields", data: {id: object.object_id} %>
+  <% end %>
+</fieldset>

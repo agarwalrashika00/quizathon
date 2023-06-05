@@ -1,0 +1,31 @@
+<h2 class="card-header bg-dark text-light">New Quiz</h2>
+<%= render 'shared/errors', model: @quiz %>
+<div class="form ml-2">
+  <%= form_with model: [:admin, @quiz] do |form| %>
+    <div class="field">
+      <%= form.text_field :title, placeholder: 'Title', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.text_area :description, placeholder: 'Description', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.select :genre_ids, Genre.pluck(:title, :id), { include_blank: 'Choose genres' }, multiple: true %>
+    </div>
+    <div class="field">
+      <%= form.select :level, Quiz.levels.keys, include_blank: 'Choose a level' %>
+    </div>
+    <div class="field">
+      <%= form.label :time_limit_in_minutes %>
+      <br \>
+      <%= form.number_field :time_limit_in_minutes %>
+    </div>
+    <div class="field">
+      <%= form.label :quiz_banner, 'Choose a quiz banner' %>
+      <br />
+      <%= form.file_field :quiz_banner %>
+    </div>
+    <div class="field action">
+      <%= form.submit class: 'btn btn-dark' %>
+    </div>
+  <% end %>
+</div>

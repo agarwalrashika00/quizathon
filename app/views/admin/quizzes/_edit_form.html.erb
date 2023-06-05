@@ -1,0 +1,41 @@
+<%= render 'shared/errors', model: quiz %>
+<div class="form ml-2">
+  <%= form_with model: [:admin, quiz] do |form| %>
+    <div class="field">
+      <%= form.text_field :title, placeholder: 'Title', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.text_area :description, placeholder: 'Description', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.select :genre_ids, Genre.pluck(:title, :id), { include_blank: 'Choose genres' }, multiple: true %>
+    </div>
+    <div class="field">
+      <%= form.select :level, Quiz.levels.keys, include_blank: 'Choose a level' %>
+    </div>
+    <div class="field">
+      <%= form.label :time_limit_in_minutes %>
+      <%= form.number_field :time_limit_in_minutes, value: quiz.time_limit_in_seconds.to_i / 60 %>
+    </div>
+    <div class="field">
+      <% if quiz.quiz_banner.present? %>
+        <div>
+          Quiz banner
+          <%= image_tag quiz.quiz_banner, width: '80px', class: 'mb-2' %>
+        </div>
+        <%= form.label :quiz_banner, 'Choose another quiz banner' %>
+      <% else %>
+        <%= form.label :quiz_banner, 'Choose a quiz banner' %>
+      <% end %>
+      <br />
+      <%= form.file_field :quiz_banner %>
+    </div>
+    <%= form.fields_for :quiz_questions do |quiz_questions_form| %>
+      <%= render 'quiz_question_selector', f: quiz_questions_form, object: quiz_questions_form.object %>
+    <% end %>
+    <%= link_to_select_questions 'Add question', form, :quiz_questions %>
+    <div class="field action">
+      <%= form.submit class: 'btn btn-dark' %>
+    </div>
+  <% end %>
+</div>

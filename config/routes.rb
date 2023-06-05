@@ -36,7 +36,16 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :quizzes, param: :slug do
+      member do 
+        patch 'activate'
+        patch 'inactivate'
+      end
+    end
   end
 
-  resources :users, only: [:show, :edit, :update], path: '/', path_names: {show: 'profile', edit: 'profile/edit'}
+  get '/profile', to: 'users#show'
+  get '/profile/edit', to: 'users#edit', as: 'edit_user'
+  put '/profile/edit', to: 'users#update'
+
 end

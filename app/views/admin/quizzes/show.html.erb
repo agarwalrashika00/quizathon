@@ -1,0 +1,28 @@
+<div class="ml-2">
+  <div class="row">
+    <div class="col-3">
+      <% if @quiz.quiz_banner.present? %>
+        <%= image_tag @quiz.quiz_banner, width: '100px', class: 'ml-5 mt-3' %>
+      <% else %>
+        <%= image_tag 'quiz_banner.jpg', width: '100px', class: 'ml-5 mt-3' %>
+      <% end %>
+    </div>
+    <div class="col-9">
+      <h3><%= @quiz.title %></h3>
+      <p><%= @quiz.description %></p>
+      <% @quiz.genres.each do |genre| %>
+        <div class='btn btn-success'>
+          <%= genre.title %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+  <br />
+  <h3>Questions</h3>
+  <% @quiz.questions.each do |question| %>
+    <div class="ml-4 card w-75 pt-2 pb-2 pl-2">
+      <% @question = question %>
+      <%= render template: 'admin/questions/show' %>
+    </div>
+  <% end %>
+</div>
