@@ -12,7 +12,7 @@ module Controllers::Activable
     else
       flash[:alert] = "#{controller_name.classify} cannot be activated."
     end
-    redirect_to :admin_genres
+    redirect_to send("admin_#{controller_name}_path"), allow_other_host: true
   end
 
   def inactivate
@@ -21,14 +21,14 @@ module Controllers::Activable
     else
       flash[:alert] = "#{controller_name.classify} cannot be inactivated."
     end    
-    redirect_to :admin_genres
+    redirect_to send("admin_#{controller_name}_path"), allow_other_host: true
   end
 
   private
 
   def set_model_instance
     unless @model_instance = controller_name.classify.constantize.find_by(slug: params[:slug])
-      redirect_to admin_genres_path, alert: "#{controller_name.classify} doesnot exist"
+      redirect_to send("admin_#{controller_name}_path"), alert: "#{controller_name.classify} doesnot exist"
     end
   end
 

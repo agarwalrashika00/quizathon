@@ -1,0 +1,24 @@
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <div class='field'>
+      <%= f.label :title_or_description_cont, 'Name or description', class: 'mb-0' %>
+      <%= f.search_field :title_or_description_cont %>
+    </div>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :active_true, 'Active?', class: 'mb-0' %>
+    <%= f.select :active_true, [[:active, 1], [:inactive, 0]], include_blank: true %>
+  </div>
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :score_eq, 'Score', class: 'mb-0' %>
+    <%= f.search_field :score_eq %>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="actions mt-2 ml-3">
+    <%= link_to "Clear", admin_questions_path, class: "btn btn-default border border-dark" %>
+    <%= f.submit "Search", class: 'btn btn-primary border' %>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<%= render 'shared/errors', model: question %>
+<div class="form ml-2">
+  <%= form_with model: [:admin, question] do |form| %>
+    <div class="field">
+      <%= form.text_field :title, placeholder: 'Title', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.text_area :description, placeholder: 'Description', class: 'form-input' %>
+    </div>
+    <div class="field">
+      <%= form.number_field :score, placeholder: 'Score' %>
+    </div>
+    <div class="field action">
+      <%= form.submit class: 'btn btn-dark' %>
+    </div>
+  <% end %>
+</div>
