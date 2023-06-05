@@ -1,0 +1,21 @@
+<div class="col-xl-4 col-md-6">
+  <center>
+    <div class="card pt-4 pb-4 quiz-card pl-2 pr-2">
+      <center>
+        <% if quiz.quiz_banner.present? %>
+          <%= image_tag quiz.quiz_banner, width: '120px' %>
+        <% else %>
+          <%= image_tag 'quiz_banner.jpg', width: '120px' %>
+        <% end %>
+      </center>
+      <h4><%= quiz.title %></h4>
+      <p>Level: <%= quiz.level %></p>
+      <h5>
+        <% quiz.genres.each do |genre| %>
+          <div class="btn btn-secondary pt-0 pb-0 pl-1 pr-1 genre-button"><%= genre.title %></div>
+        <% end %>
+      </h5>
+      <%= link_to 'Show', quiz_path(quiz), class: 'btn btn-info w-25 ml-auto mr-auto' %>
+    </div>
+  </center>
+</div>

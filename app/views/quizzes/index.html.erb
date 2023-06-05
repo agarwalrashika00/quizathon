@@ -1,0 +1,24 @@
+<% name = current_user.present? ? current_user.first_name : 'Stranger' %>
+<h3>Welcome <%= name %></h3>
+<% unless user_signed_in? %>
+  Please sign_up/sign_in before continuing
+<% end %>
+<div class="container-fluid">
+  <div class="row">
+    <div class='col-md-1'></div>
+    <div class='col-md-10'>
+      <%= search_form_for @q do |f| %>
+        <div class="field">
+          <center>
+            <%= f.search_field :title_cont, placeholder: 'Search for quiz title', class: 'w-50 pt-1 pb-2' %>
+            <%= f.submit class: 'btn btn-success' %>
+          </center>
+        </div>
+      <% end %>
+    </div>
+    <div class='col-md-1'></div>
+  </div>
+  <div class="row">
+    <%= render partial: 'quiz_card', collection: @quizzes, as: :quiz %>
+  </div>
+</div>
