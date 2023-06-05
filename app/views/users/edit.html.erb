@@ -3,11 +3,11 @@
   <table class="table">
     <tbody>
       <tr>
-        <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, multipart: true }) do |f| %>
+        <%= form_for(@user, as: @user, url: registration_path(@user), html: { method: :put, multipart: true }) do |f| %>
           <td class="col-sm-2">
             <div class="profile-container mr-0 mb-2">
-              <% if resource.profile_photo.present? %>
-                <%= image_tag resource.profile_photo, class: "profileImage" %>
+              <% if @user.profile_photo.present? %>
+                <%= image_tag @user.profile_photo, class: "profileImage" %>
               <% else %>
                 <%= image_tag "default_profile.png", class: "profileImage" %>
               <% end %>
@@ -16,7 +16,7 @@
           </td>
           <td class="col-sm-10">
             <div class="edit-form">
-              <%= render "users/shared/error_messages", resource: resource %>
+              <%= render "users/shared/error_messages", resource: @user %>
               <div class="field">
                 <%= f.label :first_name %><br />
                 <%= f.text_field :first_name, autofocus: true %>
@@ -29,9 +29,6 @@
                 <%= f.label :email %><br />
                 <%= f.email_field :email, autofocus: true, disabled: true %>
               </div>
-              <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-                <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-              <% end %>
               <div class="field">
                 <%= f.label :password %><br />
                 <%= f.password_field :password, autocomplete: "new-password" %>
