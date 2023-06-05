@@ -1,0 +1,6 @@
+<b>Correct option: </b>
+<% if question.correct_option.option_image.present? %>
+  <%= image_tag question.correct_option.option_image, width: '80px' %>
+<% else %>
+  <%= question.correct_option.data %>
+<% end %>

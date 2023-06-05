@@ -2,7 +2,7 @@ class Admin::QuestionsController < Admin::BaseController
 
   include Controllers::Activable
 
-  before_action :set_question, only: [:edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]
 
   def index
     @q = Question.ransack(params[:q])
@@ -12,6 +12,7 @@ class Admin::QuestionsController < Admin::BaseController
 
   def new
     @question = Question.new
+    @question.question_options.build
   end
 
   def create
@@ -43,7 +44,7 @@ class Admin::QuestionsController < Admin::BaseController
   private
 
   def question_params
-    params.require(:question).permit(:title, :description, :score)
+    params.require(:question).permit(:title, :description, :score, question_options_attributes: [:id, :data, :correct, :option_image, :_destroy])
   end
 
   def set_question

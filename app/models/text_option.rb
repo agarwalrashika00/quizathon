@@ -1,0 +1,2 @@
+class TextOption < QuestionOption
+end

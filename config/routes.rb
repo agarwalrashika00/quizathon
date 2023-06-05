@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         patch 'inactivate'
       end
     end
+
   end
 
   resources :users, only: [:show, :edit, :update], path: '/', path_names: {show: 'profile', edit: 'profile/edit'}

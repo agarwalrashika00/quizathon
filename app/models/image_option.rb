@@ -1,0 +1,2 @@
+class ImageOption < QuestionOption
+end
