@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users, path: '/', path_names: { edit: :profile }, controllers: {
+  devise_for :users, path: '/', controllers: {
     sessions: "users/sessions",
     registrations: "users/registrations",
     confirmations: "users/confirmations",
@@ -20,4 +20,6 @@ Rails.application.routes.draw do
       patch 'unblock', on: :member
     end
   end
+
+  resources :users, only: [:show, :edit, :update], path: '/', path_names: {show: 'profile', edit: 'profile/edit'}
 end
