@@ -24,7 +24,7 @@ gem 'jbuilder', '~> 2.11.5'
 
 gem 'kaminari', '~> 1.2.2'
 
-gem "letter_opener", :group => :development
+gem 'letter_opener', group: :development
 
 # Use postgresql as the database for Active Record
 gem 'pg', '~> 1.1'

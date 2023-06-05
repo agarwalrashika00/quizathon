@@ -1,4 +1,5 @@
 class Admin::BaseController < ApplicationController
+
   before_action :ensure_is_admin
 
   private def ensure_is_admin
@@ -6,4 +7,5 @@ class Admin::BaseController < ApplicationController
       redirect_to root_path, alert: 'You donot have privileges to access this section'
     end
   end
+
 end

@@ -10,8 +10,16 @@ class User < ApplicationRecord
 
   has_one_attached :profile_photo
 
+  def full_name
+    "#{first_name} #{last_name}".strip
+  end
+
   def confirmation_required?
     !admin?
+  end
+
+  def after_confirmation
+    WelcomeUserMailer.with(user: self).welcome_user_mail.deliver_now
   end
 
   def self.ransackable_attributes(auth_object = nil)

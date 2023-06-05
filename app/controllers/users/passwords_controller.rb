@@ -24,7 +24,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # protected
 
   def after_resetting_password_path_for(resource)
-    if resource.role == 'admin'
+    if resource.admin?
       admin_path
     else
       super(resource)
