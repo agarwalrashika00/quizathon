@@ -1,8 +1,11 @@
 class Admin::UsersController < Admin::BaseController
+  include Controllers::Blockable
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    @users = User.order(params[:sort])
+    @q = User.ransack(params[:q])
+    @q.sorts = 'created_at desc' if @q.sorts.empty?
+    @users = @q.result(distinct: true).page(params[:page])
   end
 
   def new

@@ -1,5 +1,5 @@
 <% name = current_user.present? ? current_user.first_name : 'Stranger' %>
-<h1>Welcome, <%= name %> </h1>
+<h1>Welcome <%= name %> </h1>
 <% unless user_signed_in? %>
   Please sign_up/sign_in before continuing
 <% end %>

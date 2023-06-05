@@ -22,6 +22,8 @@ gem 'importmap-rails', '~> 1.1.6'
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 gem 'jbuilder', '~> 2.11.5'
 
+gem 'kaminari', '~> 1.2.2'
+
 gem "letter_opener", :group => :development
 
 # Use postgresql as the database for Active Record
@@ -32,6 +34,8 @@ gem 'puma', '~> 5.0'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
+
+gem 'ransack', github: 'activerecord-hackery/ransack'
 
 # Use Sass to process CSS
 gem 'sassc-rails', '~> 2.1.2'
