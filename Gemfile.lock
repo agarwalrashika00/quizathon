@@ -239,6 +239,7 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    stripe (8.5.0)
     thor (1.2.1)
     tilt (2.1.0)
     timeout (0.3.2)
@@ -291,6 +292,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails (~> 3.4.2)
   stimulus-rails (~> 1.2.1)
+  stripe (~> 8.5.0)
   turbo-rails (~> 1.4.0)
   tzinfo-data (~> 1.2023.3)
   web-console

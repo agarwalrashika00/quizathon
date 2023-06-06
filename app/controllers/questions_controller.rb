@@ -4,17 +4,11 @@ class QuestionsController < ApplicationController
   before_action :set_question
   before_action :set_quiz_runner
   before_action :set_quiz_question
+  before_action :ensure_quiz_is_not_completed, only: :show
+  before_action :ensure_time_is_not_over
 
   def show
-    if @quiz_runner.status == 'completed'
-      redirect_to quiz_path(@quiz), alert: 'You have already attempted the quiz once.'
-    else
-      @remaining_time = (@quiz.time_limit_in_seconds - (Time.now - session[:start_time].to_time).to_i)
-      if @remaining_time < 0
-        redirect_to submit_quiz_path(@quiz), alert: 'Time is over. Submmit the quiz now.'
-      end
-      @user_solution = UserSolution.find_or_initialize_by(user: current_user, quiz_question_id: @quiz_question.id)
-    end
+    @user_solution = UserSolution.find_or_initialize_by(user: current_user, quiz_question_id: @quiz_question.id)
   end
 
   def submit
@@ -71,6 +65,19 @@ class QuestionsController < ApplicationController
 
   def set_quiz_question
     @quiz_question = QuizQuestion.find_by(quiz_id: @quiz.id, question_id: @question.id)
+  end
+
+  def ensure_quiz_is_not_completed
+    if @quiz_runner.status == 'completed'
+      redirect_to quiz_path(@quiz), alert: 'You have already attempted the quiz once.'
+    end
+  end
+
+  def ensure_time_is_not_over
+    @remaining_time = (@quiz.time_limit_in_seconds - (Time.now - session[:start_time].to_time).to_i)
+    if @remaining_time < 0
+      redirect_to submit_quiz_path(@quiz), alert: 'Time is over. Submmit the quiz now.'
+    end
   end
 
   def marked_option_id

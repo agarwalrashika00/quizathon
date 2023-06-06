@@ -3,12 +3,12 @@
   <td><%= genre.description %></td>
   <td><%= genre.super_genre&.title %></td>
   <td>
-    <%= link_to '&#x270D;'.html_safe, edit_admin_genre_path(genre), class: 'btn btn-info', title: 'edit' %>
-    <%= button_to '&#x2716;'.html_safe, admin_genre_path(genre), method: :delete, class: 'btn btn-danger', title: 'delete' %>
+    <%= link_to image_tag('edit.png'), edit_admin_genre_path(genre), title: 'edit' %>
+    <%= button_to image_tag('delete.png'), admin_genre_path(genre), method: :delete, class: 'border-0 bg-transparent', title: 'delete' %>
     <% if genre.active? %>
-      <%= button_to 'inactivate', inactivate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark', title: 'inactivate' %>
+      <%= button_to 'inactivate', inactivate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark pt-1 pb-1 pl-1 pr-1', title: 'inactivate' %>
     <% else %>
-      <%= button_to 'activate', activate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark', title: 'activate' %>
+      <%= button_to 'activate', activate_admin_genre_path(genre), method: :patch, class: 'btn btn-default border border-dark pt-1 pb-1 pl-1 pr-1', title: 'activate' %>
     <% end %>
   </td>
 </tr>

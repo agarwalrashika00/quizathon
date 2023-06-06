@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   resources :quizzes, param: :slug do
     member do
       put 'start'
+      get 'resume'
       get 'submit'
       put 'complete'
       post 'comment'
@@ -60,6 +61,8 @@ Rails.application.routes.draw do
           get 'previous'
         end
       end
+
+      resources :checkouts, only: :create
     end
 
     get 'my_quizzes', on: :collection

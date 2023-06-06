@@ -6,6 +6,7 @@ class QuizRunner < ApplicationRecord
   enum status: { started: 0, unrated: 1, completed: 2 }
 
   validates :user_id, uniqueness: { scope: :quiz_id, message: 'You have already given the quiz' }
+  validate :user_pays_after_second_quiz
 
   def find_next_slug(current_question_slug)
     sorting_order_array = questions_sorting_order[1...-1].split(',')
@@ -39,6 +40,16 @@ class QuizRunner < ApplicationRecord
     self.score = compute_total_score
     self.status = 'completed'
     save
+  end
+
+  private
+
+  def user_pays_after_second_quiz
+    if QuizRunner.where(user_id: user.id).count >= 2
+      unless QuizOrder.exists?(user_id: user.id, quiz_id: quiz.id, status: 'paid')
+        errors.add :base, 'User cannnot give another quiz without paying first'
+      end
+    end
   end
 
 end

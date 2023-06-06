@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_071453) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_06_124646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -102,6 +102,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_071453) do
     t.integer "score"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "quiz_orders", force: :cascade do |t|
+    t.string "session_id"
+    t.bigint "quiz_id"
+    t.bigint "user_id"
+    t.string "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quiz_orders_on_quiz_id"
+    t.index ["user_id"], name: "index_quiz_orders_on_user_id"
   end
 
   create_table "quiz_questions", force: :cascade do |t|
