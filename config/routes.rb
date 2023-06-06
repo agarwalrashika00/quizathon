@@ -50,6 +50,8 @@ Rails.application.routes.draw do
       get 'submit'
       put 'complete'
       post 'comment'
+      post 'rate'
+      patch 'rate'
 
       resources :questions, param: :question_slug do
         member do

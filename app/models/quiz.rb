@@ -12,6 +12,9 @@ class Quiz < ApplicationRecord
   accepts_nested_attributes_for :quiz_questions, allow_destroy: true
   has_one_attached :quiz_banner
   has_many :comments, as: :commentable
+  has_many :ratings
+  has_many :quiz_runners
+  has_many :users, through: :quiz_runners
 
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }
@@ -25,6 +28,15 @@ class Quiz < ApplicationRecord
 
   def to_param
     slug
+  end
+
+  def average_rating
+    ratings = self.ratings.pluck(:rating)
+    if ratings.count.zero?
+      'unrated'
+    else
+      ratings.sum.to_f / ratings.count
+    end
   end
 
   def self.ransackable_attributes(auth_object = nil)
