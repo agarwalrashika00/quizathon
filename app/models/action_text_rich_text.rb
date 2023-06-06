@@ -1,0 +1,2 @@
+class ActionTextRichText < ApplicationRecord
+end

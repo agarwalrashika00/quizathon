@@ -12,8 +12,10 @@
  *
  *= require_tree .
  *= require_self
+ *= require './actiontext.css'
  */
 @import "bootstrap";
+@import "./actiontext.css";
 
 * {
   box-sizing: border-box;

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       put 'start'
       get 'submit'
       put 'complete'
+      post 'comment'
 
       resources :questions, param: :question_slug do
         member do

@@ -1,7 +1,7 @@
 class QuizzesController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:index, :show]
-  before_action :set_quiz, only: [:show, :start, :submit, :complete]
+  before_action :set_quiz, except: [:my_quizzes, :index]
   before_action :set_quiz_runner, only: [:submit, :complete]
 
   def index
@@ -40,6 +40,16 @@ class QuizzesController < ApplicationController
     @quiz_runners = QuizRunner.where(user: current_user)
   end
 
+  def comment
+    comment = @quiz.comments.build(comment_params)
+    if comment.save
+      @comments = Comment.where(commentable: @quiz)
+      ActionCable.server.broadcast('comments', { html: render_to_string('quizzes/show', layout: false) })
+    else
+      render 'quizzes/show', alert: 'Your comment could not be added.'
+    end
+  end
+
   private
 
   def set_quiz
@@ -52,6 +62,10 @@ class QuizzesController < ApplicationController
     unless @quiz_runner = QuizRunner.find_by_id(session[:quiz_runner_id])
       redirect_to quiz_path(@quiz), alert: 'Quiz runner doesnot exist'
     end
+  end
+
+  def comment_params
+    params.require(:comment).permit(:data, :parent_comment_id, :user_id)
   end
 
 end

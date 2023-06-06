@@ -9,6 +9,7 @@ class User < ApplicationRecord
   enum role: { participant: 0, admin: 1 }
 
   has_one_attached :profile_photo
+  has_many :comments
 
   def full_name
     "#{first_name} #{last_name}".strip
