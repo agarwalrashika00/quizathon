@@ -19,7 +19,7 @@ class Question < ApplicationRecord
   end
 
   def correct_option
-    question_options.select(&:correct?).first
+    question_options.find_by(correct: true)
   end
 
   def self.ransackable_attributes(auth_object = nil)
@@ -33,13 +33,9 @@ class Question < ApplicationRecord
   private
 
   def only_one_correct_option
-    any_correct = 0
-    question_options.each do |option|
-      any_correct += 1 if option.correct?
-    end
-    unless any_correct == 1
+    unless question_options.where(correct: true).count == 1
       errors.add :base, 'Choose exactly one correct option.'
-    end 
+    end
   end
 
   def options_count

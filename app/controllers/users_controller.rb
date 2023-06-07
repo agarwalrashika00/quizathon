@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 
-  def show
-    @user = current_user
-  end
+  before_action :set_user
 
-  def edit
+  private
+
+  def set_user
     @user = current_user
   end
 

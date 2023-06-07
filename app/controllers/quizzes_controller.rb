@@ -48,7 +48,7 @@ class QuizzesController < ApplicationController
   end
 
   def my_quizzes
-    @quiz_runners = QuizRunner.where(user: current_user)
+    @quizzes = Quiz.where(id: QuizRunner.where(user: current_user).pluck(:quiz_id))
   end
 
   def comment

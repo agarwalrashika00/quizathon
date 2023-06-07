@@ -7,14 +7,21 @@ class QuestionOption < ApplicationRecord
 
   validate :presence_of_either_data_or_image
 
+  before_validation :set_type
+
   private
 
   def presence_of_either_data_or_image
+    unless option_image.present? && data.present?
+      errors.add :base, 'Both data and image can\'t be blank'
+    end
+  end
+
+  def set_type
     if option_image.present?
       self.data = ''
       self.type = 'ImageOption'
     else
-      errors.add :base, 'Both data and image can\'t be blank' if data.blank?
       self.type = 'TextOption'
     end
   end
