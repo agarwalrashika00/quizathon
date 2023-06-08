@@ -42,6 +42,8 @@ Rails.application.routes.draw do
         patch 'inactivate'
       end
     end
+
+    resources :stats, only: :index
   end
 
   resources :quizzes, param: :slug do

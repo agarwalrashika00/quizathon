@@ -6,7 +6,11 @@ class QuizRunner < ApplicationRecord
   enum status: { started: 0, unrated: 1, completed: 2 }
 
   validates :user_id, uniqueness: { scope: :quiz_id, message: 'You have already given the quiz' }
-  validate :user_pays_after_second_quiz
+  validate :user_pays_after_second_quiz, on: :create
+
+  scope :between, -> (from, to) {
+    where(created_at: from..to)
+  }
 
   def find_next_slug(current_question_slug)
     sorting_order_array = questions_sorting_order[1...-1].split(',')

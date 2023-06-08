@@ -15,6 +15,7 @@ class Quiz < ApplicationRecord
   has_many :ratings
   has_many :quiz_runners
   has_many :users, through: :quiz_runners
+  has_many :quiz_orders
 
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }
