@@ -18,6 +18,10 @@
       <%= form.number_field :time_limit_in_minutes, value: quiz.time_limit_in_seconds.to_i / 60 %>
     </div>
     <div class="field">
+      <%= form.label :featured_at, 'Feature On' %>
+      <%= form.date_field :featured_at %>
+    </div>
+    <div class="field">
       <% if quiz.quiz_banner.present? %>
         <div>
           Quiz banner

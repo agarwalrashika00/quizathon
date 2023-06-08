@@ -40,6 +40,7 @@ Rails.application.routes.draw do
       member do 
         patch 'activate'
         patch 'inactivate'
+        patch 'feature'
       end
     end
 

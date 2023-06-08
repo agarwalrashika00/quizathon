@@ -27,6 +27,10 @@ class Quiz < ApplicationRecord
 
   before_validation :set_time_limit_in_seconds
 
+  scope :featured, -> {
+    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day.after }
+  }
+
   def to_param
     slug
   end
@@ -38,6 +42,10 @@ class Quiz < ApplicationRecord
     else
       ratings.sum.to_f / ratings.count
     end
+  end
+
+  def feature
+    update_column(:featured_at, Time.current)
   end
 
   def self.ransackable_attributes(auth_object = nil)

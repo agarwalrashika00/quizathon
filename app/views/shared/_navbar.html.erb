@@ -7,7 +7,7 @@
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
         <li class="nav-item">
-          <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_method: :delete }, class: 'nav-link text-light btn btn-dark' %>
+          <%= link_to 'Sign Out', destroy_user_session_path, data: { turbo_method: :delete }, class: 'nav-link text-light btn btn-dark mt-1' %>
         </li>
       <% else %>
         <li class="nav-item">
@@ -17,6 +17,11 @@
         <li class="nav-item">
           <%= link_to 'Register', new_user_registration_path, class: 'nav-link text-light btn btn-dark' %>
         </li>
+      <% end %>
+      <% if current_user&.profile_photo.present? %>
+        <%= link_to image_tag(current_user.profile_photo, class: 'profile-icon ml-2'), profile_path %>
+      <% elsif current_user %>
+        <%= link_to image_tag('default_profile.png', height: '50px'), profile_path %>
       <% end %>
     </ul>
   </div>
