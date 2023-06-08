@@ -1,2 +1,0 @@
-class ActionTextRichText < ApplicationRecord
-end

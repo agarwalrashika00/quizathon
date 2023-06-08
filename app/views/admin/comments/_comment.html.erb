@@ -1,0 +1,14 @@
+<tr class="h-50 body-row">
+  <td><%= comment.data %></td>
+  <td><%= comment.user.full_name %></td>
+  <td><%= comment.parent_comment&.data %></td>
+  <td><%= comment.commentable_type %></td>
+  <td>
+    <%= button_to image_tag('delete.png'), admin_comment_path(comment), method: :delete, class: 'border-0 bg-transparent', title: 'delete' %>
+    <% if comment.published? %>
+      <%= button_to 'unpublish', unpublish_admin_comment_path(comment), method: :patch, class: 'btn btn-default border border-dark', title: 'unpublish' %>
+    <% else %>
+      <%= button_to 'publish', publish_admin_comment_path(comment), method: :patch, class: 'btn btn-default border border-dark', title: 'publish' %>
+    <% end %>
+  </td>
+</tr>

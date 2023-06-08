@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_06_124646) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_08_100949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -54,7 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_06_124646) do
 
   create_table "comments", force: :cascade do |t|
     t.bigint "user_id"
-    t.boolean "published"
+    t.boolean "published", default: true
     t.bigint "parent_comment_id"
     t.string "commentable_type"
     t.bigint "commentable_id"

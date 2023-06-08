@@ -3,7 +3,7 @@
   <br />
   <div class='ml-4 pl-4 mr-4 mb-4'>
     <h4> Comments:</h4>
-    <% @quiz.comments.each do |comment| %>
+    <% @quiz.comments.published.each do |comment| %>
       <% if comment.parent_comment_id.blank? %>
         <div class="row mt-4">
           <div class="col-xs-1 pt-1 mr-2">
@@ -17,7 +17,7 @@
             <b><%= current_user && current_user == comment.user ? 'You' : comment.user.full_name %></b>
             <%= comment.data %>
             <%= link_to_add_comment 'Reply', @quiz, comment %>
-            <% comment.child_comments.each do |child_comment| %>
+            <% comment.child_comments.published.each do |child_comment| %>
               <div class="row">
                 <div class="col-xs-1 pt-1 mr-2">
                   <% if child_comment.user.profile_photo.present? %>

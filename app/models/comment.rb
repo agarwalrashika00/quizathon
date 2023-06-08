@@ -8,6 +8,26 @@ class Comment < ApplicationRecord
 
   validate :single_level_nesting
 
+  scope :published, -> {
+    where(published: true)
+  }
+
+  def publish
+    update_column(:published, true)
+  end
+
+  def unpublish
+    update_column(:published, false)
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ['commentable_id', 'commentable_type', 'created_at', 'parent_comment_id', 'published', 'updated_at', 'user_id']
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[rich_text_data user parent_comment]
+  end
+
   private
 
   def any_child_comment_has_child_comments?

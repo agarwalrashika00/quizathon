@@ -1,0 +1,24 @@
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <div class='field'>
+      <%= f.label :rich_text_data_body_cont, 'Comment', class: 'mb-0' %>
+      <%= f.search_field :rich_text_data_body_cont %>
+    </div>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :published_true, 'Published?', class: 'mb-0' %>
+    <%= f.select :published_true, [[:published, 1], [:unpublished, 0]], include_blank: true %>
+  </div>
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :commentable_type_eq, 'Comments on: ' %>
+    <%= f.select :commentable_type_eq, [:Quiz, :Question], include_blank: true %>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="actions mt-2 ml-3">
+    <%= link_to "Clear", admin_comments_path, class: "btn btn-default border border-dark" %>
+    <%= f.submit "Search", class: 'btn btn-primary border' %>
+  </div>
+</div>
