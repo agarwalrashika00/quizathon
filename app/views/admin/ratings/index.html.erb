@@ -1,0 +1,30 @@
+<h2 class="text-center">Ratings</h2>
+<div class="container-fluid pl-0 pr-0">
+  <%= search_form_for [:admin, @q] do |f| %>
+    <%= render 'filter', f: f %>
+  <% end %>
+  <div class="row justify-content-center body-row">
+    <table class = "table table-striped table-hover mt-2">
+      <thead class="bg-dark">
+        <tr class="h-50 body-row">
+          <th><%= sort_link(@q, :quiz_title) %></th>
+          <th><%= sort_link(@q, :user_first_name, [:user_first_name, :user_last_name], 'User name') %></th>
+          <th><%= sort_link(@q, :rating) %></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render @ratings %>
+        <tr class="h-50 body-row bg-light">
+          <td class="col-md-12 mt-2 float-right">
+            <nav aria-label="Page navigation">
+              <ul class="pagination float-right">
+                <%= paginate @ratings %>
+              </ul>
+            </nav>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
