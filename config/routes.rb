@@ -80,6 +80,14 @@ Rails.application.routes.draw do
     get 'my_quizzes', on: :collection
   end
 
+  namespace :api, defaults: { format: 'json' } do
+    get 'quizzes', to: 'quizzes#index'
+
+    namespace :users do
+      get 'quizzes', to: 'quizzes#index'
+    end
+  end
+
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit', as: 'edit_user'
   put '/profile/edit', to: 'users#update'
