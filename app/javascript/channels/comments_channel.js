@@ -11,7 +11,7 @@ consumer.subscriptions.create("CommentsChannel", {
 
   received(data) {
     // Called when there's incoming data on the websocket for this channel
-    const quizElement = document.querySelector(".show_quiz")
+    const quizElement = document.querySelector(".all_comments")
     if (quizElement) {
       quizElement.innerHTML = data.html
     }
