@@ -13,7 +13,6 @@ class QuizzesController < ApplicationController
     check_payments_controller = Quizathon::CheckPaymentsController.new(current_user, @quiz)
     check_payments_controller.update_quiz_order
     @can_play = check_payments_controller.user_can_play_quiz
-    @rating = Rating.find_or_initialize_by(user: current_user, quiz: @quiz)
   end
 
   def start
@@ -54,7 +53,8 @@ class QuizzesController < ApplicationController
   def comment
     comment = @quiz.comments.build(comment_params)
     if comment.save
-      @comments = Comment.where(commentable: @quiz)
+      redirect_to quiz_path(@quiz)
+      Quizathon::NotificationsController.new(comment.parent_comment).notify_parent
       ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false) })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'
@@ -74,7 +74,6 @@ class QuizzesController < ApplicationController
       redirect_to quiz_path(@quiz), alert: 'Rating could not be added.'
     end
   end
-
 
   private
 
