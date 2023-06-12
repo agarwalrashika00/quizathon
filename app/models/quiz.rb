@@ -29,7 +29,7 @@ class Quiz < ApplicationRecord
   before_validation :set_time_limit_in_seconds
 
   scope :featured, -> {
-    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day.after }
+    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day }
   }
 
   def to_param

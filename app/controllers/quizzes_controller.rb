@@ -54,7 +54,7 @@ class QuizzesController < ApplicationController
     comment = @quiz.comments.build(comment_params)
     if comment.save
       redirect_to quiz_path(@quiz)
-      Quizathon::NotificationsController.new(comment.parent_comment).notify_parent
+      Quizathon::NotificationsController.new(comment.user, comment.parent_comment, @quiz).notify_parent
       ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false) })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'

@@ -1,0 +1,5 @@
+<p>
+  <span class='font-weight-bolder'><%= @commenter.full_name %> </span>
+  replied to your comment on quiz <%= @quiz.title %>.
+  <%= link_to 'Click here to view.', quiz_url(@quiz) %>
+</p>
