@@ -29,7 +29,7 @@ class User < ApplicationRecord
   end
 
   def total_score
-    quiz_runners.pluck(:score).sum
+    quiz_runners.pluck(:score).compact.sum
   end
 
   def self.ransackable_attributes(auth_object = nil)

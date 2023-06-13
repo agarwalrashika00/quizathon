@@ -7,7 +7,7 @@ module Models::Activable
   end
 
   def inactivate
-    update_column(:active, false)
+    update(active: false)
   end
 
 end

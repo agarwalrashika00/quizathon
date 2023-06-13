@@ -7,12 +7,19 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :question_options, allow_destroy: true
   has_many :quiz_questions, dependent: :destroy
   has_many :quizzes, through: :quiz_questions
+  has_many :started_quiz_runners, through: :quizzes
 
   validates :title, presence: true, uniqueness: true
   validates :slug, presence: true, uniqueness: true
   validates :score, numericality: { only_integer: true, greater_than: 0 }
   validate :options_count
   validate :only_one_correct_option
+
+  before_validation ActivableCallbacks, on: :update
+
+  scope :active, -> {
+    where(active: true)
+  }
 
   def to_param
     slug
