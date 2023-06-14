@@ -15,7 +15,7 @@ module Quizathon
     end
 
     def user_can_play_quiz
-      if (QuizRunner.where(user_id: @user.id).count < 2) || QuizOrder.exists?(user_id: @user.id, quiz_id: @quiz.id, status: 'paid')
+      if @user && ((QuizRunner.where(user_id: @user.id).count < 2) || QuizOrder.exists?(user_id: @user.id, quiz_id: @quiz.id, status: 'paid'))
         true
       end
     end

@@ -8,9 +8,12 @@
     <%= link_to image_tag('edit.png'), edit_admin_quiz_path(quiz), title: 'edit' %>
     <%= button_to image_tag('delete.png'), admin_quiz_path(quiz), method: :delete, class: 'border-0 bg-transparent', title: 'delete' %>
     <% if quiz.active? %>
-      <%= button_to 'inactivate', inactivate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark', title: 'inactivate' %>
+      <%= button_to 'inactivate', inactivate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark pl-1 pr-1', title: 'inactivate' %>
     <% else %>
-      <%= button_to 'activate', activate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark', title: 'activate' %>
+      <%= button_to 'activate', activate_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark pl-1 pr-1', title: 'activate' %>
+    <% end %>
+    <% unless quiz.featured_at? %>
+      <%= button_to 'Feature', feature_admin_quiz_path(quiz), method: :patch, class: 'btn btn-default border border-dark pl-1 pr-1', title: 'feature' %>
     <% end %>
   </td>
 </tr>

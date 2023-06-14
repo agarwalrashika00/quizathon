@@ -2,7 +2,7 @@ class Admin::QuizzesController < Admin::BaseController
 
   include Controllers::Activable
 
-  before_action :set_quiz, only: [:show, :edit, :update, :destroy]
+  before_action :set_quiz, only: [:show, :edit, :update, :destroy, :feature]
 
   def index
     @q = Quiz.ransack(params[:q])
@@ -41,10 +41,18 @@ class Admin::QuizzesController < Admin::BaseController
     end
   end
 
+  def feature
+    if @quiz.feature
+      redirect_to admin_quizzes_path, notice: 'Quiz featured successfully'
+    else
+      redirect_to admin_quizzes_path, alert: 'Quiz cannot be featured'
+    end
+  end
+
   private
 
   def quiz_params
-    params.require(:quiz).permit(:title, :description, :level, :time_limit_in_minutes, :quiz_banner, genre_ids: [], quiz_questions_attributes: [:id, :question_id, :active, :_destroy])
+    params.require(:quiz).permit(:title, :description, :level, :time_limit_in_minutes, :featured_at, :quiz_banner, genre_ids: [], quiz_questions_attributes: [:id, :question_id, :active, :_destroy])
   end
 
   def set_quiz
