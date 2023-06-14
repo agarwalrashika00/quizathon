@@ -52,6 +52,8 @@ Rails.application.routes.draw do
         patch 'unpublish'
       end
     end
+
+    resources :ratings
   end
 
   resources :quizzes, param: :slug do
