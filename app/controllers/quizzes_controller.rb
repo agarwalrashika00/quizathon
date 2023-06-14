@@ -16,7 +16,7 @@ class QuizzesController < ApplicationController
   end
 
   def start
-    questions_sorting_order = @quiz.questions.pluck(:slug).shuffle
+    questions_sorting_order = @quiz.active_questions.pluck(:slug).shuffle
     quiz_runner = QuizRunner.new(user: current_user, quiz: @quiz, status: 'started', questions_sorting_order: questions_sorting_order.to_s.remove('"', ' '))
     if quiz_runner.save
       session[:quiz_runner_id] = quiz_runner.id
