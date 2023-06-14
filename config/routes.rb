@@ -45,6 +45,13 @@ Rails.application.routes.draw do
     end
 
     resources :stats, only: :index
+
+    resources :comments do
+      member do
+        patch 'publish'
+        patch 'unpublish'
+      end
+    end
   end
 
   resources :quizzes, param: :slug do
