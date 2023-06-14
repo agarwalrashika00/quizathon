@@ -9,12 +9,15 @@ class Quiz < ApplicationRecord
 
   has_and_belongs_to_many :genres
   has_many :quiz_questions, dependent: :destroy
+  has_many :active_quiz_questions, -> { where(active: true) }, class_name: 'QuizQuestion'
   has_many :questions, through: :quiz_questions
+  has_many :active_questions, -> { where(active: true) }, through: :active_quiz_questions, source: :question
   accepts_nested_attributes_for :quiz_questions, allow_destroy: true
   has_one_attached :quiz_banner
   has_many :comments, as: :commentable
   has_many :ratings
   has_many :quiz_runners
+  has_many :started_quiz_runners, -> { where(status: 'started') }, class_name: 'QuizRunner'
   has_many :users, through: :quiz_runners
   has_many :quiz_orders
 
@@ -26,10 +29,12 @@ class Quiz < ApplicationRecord
     without: Quizathon::URL_REGEXP
   }
 
-  before_validation :set_time_limit_in_seconds
+  before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
+  before_validation ActivableCallbacks, on: :update
+  after_save_commit :schedule_mail_if_featured
 
   scope :featured, -> {
-    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day.after }
+    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day }
   }
 
   def to_param
@@ -45,7 +50,7 @@ class Quiz < ApplicationRecord
     end
   end
 
-  def feature
+  def feature_now
     update_column(:featured_at, Time.current)
   end
 
@@ -73,6 +78,12 @@ class Quiz < ApplicationRecord
 
   def description_word_count
     description.split
+  end
+
+  def schedule_mail_if_featured
+    if featured_at_before_last_save != featured_at && (featured_at - 10.minutes) > Time.current
+      SendMailForFeaturedQuizJob.set(wait_until: featured_at - 10.minutes).perform_later(self)
+    end
   end
 
 end

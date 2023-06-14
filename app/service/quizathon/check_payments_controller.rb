@@ -8,7 +8,7 @@ module Quizathon
     end
 
     def update_quiz_order
-      if @user && (quiz_order = QuizOrder.find_by(user: @user, quiz_id: @quiz.id)) && quiz_order.status != 'paid'
+      if @user && (quiz_order = QuizOrder.where(user: @user, quiz_id: @quiz.id).last) && quiz_order.status != 'paid'
         quiz_order.status = Stripe::Checkout::Session.retrieve(quiz_order.session_id)[:payment_status]
         quiz_order.save
       end

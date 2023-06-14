@@ -74,6 +74,7 @@ a.side-navbar-logo {
   margin-right: 0px;
   box-sizing: border-box;
 }
+
 .body-row {
   width: 100%;
   td{
@@ -130,4 +131,19 @@ div.genre-buttons {
   height: 50px;
   width: 50px;
   border-radius: 50%;
+}
+
+.notification {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.horizontal-navbar {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(to bottom, #ffffff, #f8f9fa);
+}
+
+.my-quizzes-button:hover{
+  background-color: #DDEFFE;
 }

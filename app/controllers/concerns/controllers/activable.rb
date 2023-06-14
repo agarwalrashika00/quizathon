@@ -19,7 +19,7 @@ module Controllers::Activable
     if @model_instance.inactivate
       flash[:alert] = "#{controller_name.classify} was successfully inactivated."
     else
-      flash[:alert] = "#{controller_name.classify} cannot be inactivated."
+      flash[:alert] =  @model_instance.errors[:active].first
     end    
     redirect_to send("admin_#{controller_name}_path"), allow_other_host: true
   end

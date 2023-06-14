@@ -1,5 +1,7 @@
 class Admin::BaseController < ApplicationController
 
+  layout 'admin'
+
   before_action :ensure_is_admin
 
   private def ensure_is_admin

@@ -92,4 +92,5 @@ Rails.application.routes.draw do
   get '/profile/edit', to: 'users#edit', as: 'edit_user'
   put '/profile/edit', to: 'users#update'
 
+  resources :notifications, only: :index
 end

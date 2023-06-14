@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_08_100949) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -83,6 +83,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_100949) do
     t.index ["quiz_id", "genre_id"], name: "index_genres_quizzes_on_quiz_id_and_genre_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.bigint "user_id"
+    t.string "data"
+    t.boolean "read", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "question_options", force: :cascade do |t|
     t.bigint "question_id"
     t.string "type"
@@ -111,6 +120,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_08_100949) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "amount"
+    t.string "currency_code"
     t.index ["quiz_id"], name: "index_quiz_orders_on_quiz_id"
     t.index ["user_id"], name: "index_quiz_orders_on_user_id"
   end

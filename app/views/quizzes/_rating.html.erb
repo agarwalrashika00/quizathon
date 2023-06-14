@@ -1,5 +1,5 @@
 <div class="field">
-  <%= form_with model: rating, url: rate_quiz_path(quiz), scope: '' do |form| %>
+  <%= form_with model: Rating.find_or_initialize_by(user: current_user, quiz: quiz), url: rate_quiz_path(quiz), scope: '' do |form| %>
     <%= form.select :rating, [1,2,3,4,5], include_blank: 'Rate the quiz' %>
     <%= form.submit 'Rate' %>
   <% end %>

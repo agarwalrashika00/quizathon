@@ -1,0 +1,20 @@
+<div class="notification-panel w-75 ml-2 mt-2">
+  <div class="notification mb-4">
+    <div class="title font-weight-bolder">New Notifications</div>
+    <div class="message mt-4">
+      <% @new_notifications.each do |notification| %>
+        <%= notification.data %>
+        <br />
+      <% end %>
+    </div>
+  </div>
+  <div class="notification mb-4">
+    <div class="title font-weight-bolder">Older Notifications</div>
+    <div class="message mt-4">
+      <% @old_notifications.each do |notification| %>
+        <%= notification.data %>
+        <br />
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -13,15 +13,15 @@ class QuizzesController < ApplicationController
     check_payments_controller = Quizathon::CheckPaymentsController.new(current_user, @quiz)
     check_payments_controller.update_quiz_order
     @can_play = check_payments_controller.user_can_play_quiz
-    @rating = Rating.find_or_initialize_by(user: current_user, quiz: @quiz)
   end
 
   def start
-    questions_sorting_order = @quiz.questions.pluck(:slug).shuffle
+    questions_sorting_order = @quiz.active_questions.pluck(:slug).shuffle
     quiz_runner = QuizRunner.new(user: current_user, quiz: @quiz, status: 'started', questions_sorting_order: questions_sorting_order.to_s.remove('"', ' '))
     if quiz_runner.save
       session[:quiz_runner_id] = quiz_runner.id
       session[:start_time] = Time.now
+      QuizAutocompleteJob.set(wait_until: Time.now + @quiz.time_limit_in_seconds).perform_later(quiz_runner)
       redirect_to question_path(question_slug: questions_sorting_order.first)
     else
       redirect_to quiz_path(@quiz), notice: quiz_runner.errors.to_a
@@ -54,7 +54,8 @@ class QuizzesController < ApplicationController
   def comment
     comment = @quiz.comments.build(comment_params)
     if comment.save
-      @comments = Comment.where(commentable: @quiz)
+      redirect_to quiz_path(@quiz)
+      Quizathon::NotificationsController.new(comment.user, comment.parent_comment, @quiz).notify_parent
       ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false) })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'
@@ -74,7 +75,6 @@ class QuizzesController < ApplicationController
       redirect_to quiz_path(@quiz), alert: 'Rating could not be added.'
     end
   end
-
 
   private
 

@@ -14,6 +14,7 @@ class User < ApplicationRecord
   has_many :quizzes, through: :quiz_runners
   has_many :ratings
   has_many :quiz_orders
+  has_many :notifications
 
   def full_name
     "#{first_name} #{last_name}".strip
@@ -25,6 +26,10 @@ class User < ApplicationRecord
 
   def after_confirmation
     WelcomeUserMailer.with(user: self).welcome_user_mail.deliver_now
+  end
+
+  def total_score
+    quiz_runners.pluck(:score).compact.sum
   end
 
   def self.ransackable_attributes(auth_object = nil)
