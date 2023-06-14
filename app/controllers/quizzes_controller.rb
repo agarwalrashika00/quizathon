@@ -8,6 +8,10 @@ class QuizzesController < ApplicationController
     @q = Quiz.where(active: true).ransack(params[:q])
     @quizzes = @q.result(distinct: true)
   end
+  
+  def show
+    @rating = Rating.find_or_initialize_by(user: current_user, quiz: @quiz)
+  end
 
   def start
     questions_sorting_order = @quiz.questions.pluck(:slug).shuffle
@@ -49,6 +53,22 @@ class QuizzesController < ApplicationController
       render 'quizzes/show', alert: 'Your comment could not be added.'
     end
   end
+
+  def rate
+    rating = Rating.find_or_initialize_by(user: current_user, quiz: @quiz)
+    rating.rating = params[:rating]
+
+    if rating.save
+      redirect_to quiz_path(@quiz), notice: 'Rating added successfully.'
+      @q = Quiz.where(active: true).ransack(params[:q])
+      @quizzes = @q.result(distinct: true)
+      ActionCable.server.broadcast('ratings', { html: render_to_string('quizzes/index', layout: false) })
+    else
+      redirect_to quiz_path(@quiz), alert: 'Rating could not be added.'
+    end
+
+  end
+
 
   private
 

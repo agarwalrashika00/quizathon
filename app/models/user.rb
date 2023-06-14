@@ -10,6 +10,9 @@ class User < ApplicationRecord
 
   has_one_attached :profile_photo
   has_many :comments
+  has_many :quiz_runners
+  has_many :quizzes, through: :quiz_runners
+  has_many :ratings
 
   def full_name
     "#{first_name} #{last_name}".strip
