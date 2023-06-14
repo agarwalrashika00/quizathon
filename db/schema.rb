@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_30_063428) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_01_065424) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,6 +91,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_063428) do
     t.index ["quiz_id"], name: "index_quiz_questions_on_quiz_id"
   end
 
+  create_table "quiz_runners", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "quiz_id"
+    t.integer "status"
+    t.integer "score"
+    t.string "questions_sorting_order"
+    t.integer "current_question_number"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_quiz_runners_on_quiz_id"
+    t.index ["user_id"], name: "index_quiz_runners_on_user_id"
+  end
+
   create_table "quizzes", force: :cascade do |t|
     t.string "slug", null: false
     t.string "title", null: false
@@ -102,6 +115,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_30_063428) do
     t.bigint "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "user_solutions", force: :cascade do |t|
+    t.bigint "quiz_question_id"
+    t.bigint "user_id"
+    t.bigint "marked_option_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["marked_option_id"], name: "index_user_solutions_on_marked_option_id"
+    t.index ["quiz_question_id"], name: "index_user_solutions_on_quiz_question_id"
+    t.index ["user_id"], name: "index_user_solutions_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

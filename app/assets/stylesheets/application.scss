@@ -98,6 +98,18 @@ a.side-navbar-logo {
 div.genre-buttons {
   display:inline;
 }
+
 .questions-number-button {
   text-align: right;
+}
+
+.timer {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 7px solid grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
 }

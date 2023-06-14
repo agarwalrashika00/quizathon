@@ -1,0 +1,24 @@
+<div class="ml-2">
+  <div class='timer'>
+    00:<%= @remaining_time %>
+  </div>
+  <h4><%= @question.title%></h4>
+  <p><%= @question.description %></p>
+  <%= form_with model: @user_solution, url: submit_question_path(@quiz, question_slug: @question.slug), method: :put do |form| %>
+    <% @question.question_options.each do |option| %>
+      <%= form.radio_button :marked_option_id, option.id %>
+      <% if option.data.present? %>
+        <%= form.label :marked_option_id, option.data %>
+      <% else %>
+        <%= image_tag option.option_image, width: '120px', height: '120px' %>
+      <% end %>
+      <br />
+      <br />
+    <% end %>
+    <%= form.hidden_field :user_id, value: current_user.id %>
+    <%= form.hidden_field :quiz_question_id, value: @quiz_question.id %>
+    <%= link_to 'Previous', previous_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark', remote: true %>
+    <%= form.submit 'Submit', class: 'btn btn-dark' %>
+    <%= link_to 'Next', next_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark' %>
+  <% end %>
+</div>

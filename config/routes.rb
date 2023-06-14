@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   # Defines the root path route ("/")
-  root 'users/quizzes#index'
+  root 'quizzes#index'
 
   namespace :admin do
     resources :users do
@@ -44,7 +44,21 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :quizzes, param: :slug
+  resources :quizzes, param: :slug do
+    member do
+      put 'start'
+      get 'submit'
+      put 'complete'
+
+      resources :questions, param: :question_slug do
+        member do
+          put 'submit'
+          get 'next'
+          get 'previous'
+        end
+      end
+    end
+  end
 
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit', as: 'edit_user'
