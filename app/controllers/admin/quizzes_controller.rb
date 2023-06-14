@@ -42,7 +42,7 @@ class Admin::QuizzesController < Admin::BaseController
   end
 
   def feature
-    if @quiz.feature
+    if @quiz.feature_now
       redirect_to admin_quizzes_path, notice: 'Quiz featured successfully'
     else
       redirect_to admin_quizzes_path, alert: 'Quiz cannot be featured'

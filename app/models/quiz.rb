@@ -31,6 +31,7 @@ class Quiz < ApplicationRecord
 
   before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
   before_validation ActivableCallbacks, on: :update
+  after_save_commit :schedule_mail_if_featured
 
   scope :featured, -> {
     where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day }
@@ -49,7 +50,7 @@ class Quiz < ApplicationRecord
     end
   end
 
-  def feature
+  def feature_now
     update_column(:featured_at, Time.current)
   end
 
@@ -77,6 +78,12 @@ class Quiz < ApplicationRecord
 
   def description_word_count
     description.split
+  end
+
+  def schedule_mail_if_featured
+    if featured_at_before_last_save != featured_at && (featured_at - 10.minutes) > Time.current
+      SendMailForFeaturedQuizJob.set(wait_until: featured_at - 10.minutes).perform_later(self)
+    end
   end
 
 end
