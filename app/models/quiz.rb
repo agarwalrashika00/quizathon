@@ -19,7 +19,7 @@ class Quiz < ApplicationRecord
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }
   validates_length_of :title_word_count, minimum: 5, message: 'should be at least 5', if: -> { title.present? }
-  validates_length_of :description_word_count, minimum: 15, if: -> { description.present? }
+  validates_length_of :description_word_count, minimum: 15, if: :description?
   validates :description, allow_blank: true, format: {
     without: Quizathon::URL_REGEXP
   }
