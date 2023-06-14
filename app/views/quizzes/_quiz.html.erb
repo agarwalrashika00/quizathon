@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="border border-secondary pt-2 pb-2 ml-4 mr-4 pl-2 mt-2">
+    <div class="row">
+      <div class="col-6 questions-number-button">
+        <div class="btn btn-dark">
+          <%= quiz.questions.size %> questions
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="btn btn-dark">
+          <%= quiz.time_limit_in_seconds.to_i / 60 %> minutes
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-3">
+        <% if quiz.quiz_banner.present? %>
+          <%= image_tag quiz.quiz_banner, width: '105px', class: 'ml-5 mt-3' %>
+        <% else %>
+          <%= image_tag 'quiz_banner.jpg', width: '105px', class: 'ml-5 mt-3' %>
+        <% end %>
+      </div>
+      <div class="col-md-9">
+        <h3><%= quiz.title %></h3>
+        <p><%= quiz.description %></p>
+        <% quiz.genres.each do |genre| %>
+          <div class='btn btn-success'>
+            <%= genre.title %>
+          </div>
+        <% end %>
+        <div class='mt-1'>
+          <% if current_user && has_completed(current_user, quiz) %>
+            <div class='btn btn-info'>Score: <%= compute_score(current_user, quiz) %></div>
+          <% else %>
+            <b>Take quiz</b>
+            <%= button_to image_tag('play.png', width: '30px'), start_quiz_path(quiz), method: 'put', class: 'border-0 bg-transparent' %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,6 +49,7 @@ Rails.application.routes.draw do
       put 'start'
       get 'submit'
       put 'complete'
+      post 'comment'
 
       resources :questions, param: :question_slug do
         member do
@@ -58,6 +59,8 @@ Rails.application.routes.draw do
         end
       end
     end
+
+    get 'my_quizzes', on: :collection
   end
 
   get '/profile', to: 'users#show'

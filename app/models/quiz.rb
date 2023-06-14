@@ -11,6 +11,7 @@ class Quiz < ApplicationRecord
   has_many :questions, through: :quiz_questions
   accepts_nested_attributes_for :quiz_questions, allow_destroy: true
   has_one_attached :quiz_banner
+  has_many :comments, as: :commentable
 
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }

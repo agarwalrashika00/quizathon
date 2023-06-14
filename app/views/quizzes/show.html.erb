@@ -1,42 +1,49 @@
-<div class="container-fluid">
-  <div class="border border-secondary pt-2 pb-2 ml-4 mr-4 pl-2 mt-2">
-    <div class="row">
-      <div class="col-6 questions-number-button">
-        <div class="btn btn-dark">
-          <%= @quiz.questions.size %> questions
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="btn btn-dark">
-          <%= @quiz.time_limit_in_seconds.to_i / 60 %> minutes
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-3">
-        <% if @quiz.quiz_banner.present? %>
-          <%= image_tag @quiz.quiz_banner, width: '105px', class: 'ml-5 mt-3' %>
-        <% else %>
-          <%= image_tag 'quiz_banner.jpg', width: '105px', class: 'ml-5 mt-3' %>
-        <% end %>
-      </div>
-      <div class="col-md-9">
-        <h3><%= @quiz.title %></h3>
-        <p><%= @quiz.description %></p>
-        <% @quiz.genres.each do |genre| %>
-          <div class='btn btn-success'>
-            <%= genre.title %>
+<div class="show_quiz">
+  <%= render @quiz %>
+  <br />
+  <div class='ml-4 mr-4 mb-4'>
+    <h4> Comments:</h4>
+    <% @quiz.comments.each do |comment| %>
+      <% if comment.parent_comment_id.blank? %>
+        <div class="row mt-4">
+          <div class="col-sm-2 pt-2">
+            <% if comment.user.profile_photo.present? %>
+              <%= image_tag comment.user.profile_photo, height: '60px' %>
+            <% else %>
+              <%= image_tag 'default_profile.png', height: '60px' %>
+            <% end %>
           </div>
-        <% end %>
-        <div class='mt-1'>
-          <% if current_user && has_completed(current_user, @quiz) %>
-            <div class='btn btn-info'>Score: <%= compute_score(current_user, @quiz) %></div>
-          <% else %>
-            <b>Take quiz</b>
-            <%= button_to image_tag('play.png', width: '30px'), start_quiz_path(@quiz), method: 'put', class: 'border-0 bg-transparent' %>
-          <% end %>
+          <div class="col-sm-10">
+            <b><%= comment.user.full_name %></b>
+            <%= comment.data %>
+            <%= link_to_add_comment 'Reply', @quiz, comment %>
+            <% comment.child_comments.each do |child_comment| %>
+              <div class="row">
+                <div class="col-sm-2">
+                  <% if child_comment.user.profile_photo.present? %>
+                    <%= image_tag child_comment.user.profile_photo, height: '60px' %>
+                  <% else %>
+                    <%= image_tag 'default_profile.png', height: '60px' %>
+                  <% end %>
+                </div>
+                <div class="col-sm-10">
+                  <b><%= child_comment.user.full_name %></b>
+                  <%= child_comment.data %>
+                </div>
+              </div>
+            <% end %>
+          </div>
         </div>
+      <% end %>
+    <% end %>
+  </div>
+  <div class="ml-4 mr-4 mb-2">
+    <%= form_with model: Comment.new, url: comment_quiz_path(@quiz) do |form| %>
+      <div class="w-50">
+        <%= form.rich_text_area :data, placeholer: 'Add new comment' %>
       </div>
-    </div>
+      <%= form.hidden_field :user_id, value: current_user.id %>
+      <%= form.submit 'Comment', class: 'mt-2 btn btn-primary' %>
+    <% end %>
   </div>
 </div>

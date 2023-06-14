@@ -26,4 +26,12 @@ module ApplicationHelper
     QuizRunner.find_by(user_id: user.id, quiz_id: quiz.id)&.score
   end
 
+  def link_to_add_comment(name, quiz, parent_comment)
+    comment = Comment.new
+    fields = form_with model: comment, url: comment_quiz_path(quiz) do |form|
+      render('child_comment', form: form, parent_comment_id: parent_comment.id)
+    end
+    link_to(name, '#', class: "add_fields", data: {id: comment.object_id, fields: fields.gsub("\n", "") })
+  end
+
 end
