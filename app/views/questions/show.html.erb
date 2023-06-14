@@ -1,6 +1,15 @@
 <div class="ml-2">
-  <div class='timer'>
-    00:<%= @remaining_time %>
+  <div class="container-fluid">
+    <div class="row w-100">
+      <div class="col-sm-6">
+        <div class='timer'>
+          00:<%= @remaining_time %>
+        </div>
+      </div>
+      <div class="col-sm-6 text-right ">
+        <h4>Score: <%= @question.score %></h4>
+      </div>
+    </div>
   </div>
   <h4><%= @question.title%></h4>
   <p><%= @question.description %></p>

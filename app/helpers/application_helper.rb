@@ -22,6 +22,10 @@ module ApplicationHelper
     QuizRunner.find_by(user_id: user.id, quiz_id: quiz.id)&.completed?
   end
 
+  def has_started(user, quiz)
+    QuizRunner.find_by(user_id: user.id, quiz_id: quiz.id)&.started?
+  end
+
   def compute_score(user, quiz)
     QuizRunner.find_by(user_id: user.id, quiz_id: quiz.id)&.score
   end

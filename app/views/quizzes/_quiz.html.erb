@@ -31,9 +31,19 @@
         <div class='mt-1'>
           <% if current_user && has_completed(current_user, quiz) %>
             <div class='btn btn-info'>Score: <%= compute_score(current_user, quiz) %></div>
+          <% elsif @can_play %>
+            <% if current_user && has_started(current_user, quiz) %>
+              <b>Resume quiz</b>
+              <%= link_to image_tag('play.png', width: '30px'), resume_quiz_path(quiz), class: 'border-0 bg-transparent' %>
+            <% else %>
+              <b>Take quiz</b>
+              <%= button_to image_tag('play.png', width: '30px'), start_quiz_path(quiz), method: 'put', class: 'border-0 bg-transparent' %>
+            <% end %>
           <% else %>
-            <b>Take quiz</b>
-            <%= button_to image_tag('play.png', width: '30px'), start_quiz_path(quiz), method: 'put', class: 'border-0 bg-transparent' %>
+            <%= button_to 'Buy and checkout', checkouts_path, data: { turbo: false }, class: 'btn btn-info',
+            params: {
+              slug: quiz.slug
+              } %>
           <% end %>
           <%= render 'rating', quiz: quiz, rating: rating %>
         </div>

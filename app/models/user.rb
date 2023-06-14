@@ -13,6 +13,7 @@ class User < ApplicationRecord
   has_many :quiz_runners
   has_many :quizzes, through: :quiz_runners
   has_many :ratings
+  has_many :quiz_orders
 
   def full_name
     "#{first_name} #{last_name}".strip

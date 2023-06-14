@@ -2,7 +2,7 @@ class QuizzesController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:index, :show]
   before_action :set_quiz, except: [:my_quizzes, :index]
-  before_action :set_quiz_runner, only: [:submit, :complete]
+  before_action :set_quiz_runner, only: [:resume, :submit, :complete]
 
   def index
     @q = Quiz.where(active: true).ransack(params[:q])
@@ -10,6 +10,9 @@ class QuizzesController < ApplicationController
   end
   
   def show
+    check_payments_controller = Quizathon::CheckPaymentsController.new(current_user, @quiz)
+    check_payments_controller.update_quiz_order
+    @can_play = check_payments_controller.user_can_play_quiz
     @rating = Rating.find_or_initialize_by(user: current_user, quiz: @quiz)
   end
 
@@ -23,6 +26,10 @@ class QuizzesController < ApplicationController
     else
       redirect_to quiz_path(@quiz), notice: quiz_runner.errors.to_a
     end
+  end
+
+  def resume
+    redirect_to question_path(question_slug: @quiz_runner.questions_sorting_order[1...-1].split(',').first )
   end
 
   def submit
