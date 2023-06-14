@@ -2,6 +2,7 @@ class Quiz < ApplicationRecord
 
   include Sluggable
   include Models::Activable
+  include ActiveModel::Serializers::JSON
 
   attr_accessor :time_limit_in_minutes
   enum level: { beginner: 1, easy: 2, moderate: 3, difficult: 4, advance: 5 }
@@ -54,6 +55,10 @@ class Quiz < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     []
+  end
+
+  def serialize
+    serializable_hash(only: [:slug, :title, :description, :time_limit_in_seconds, :level])
   end
 
   private
