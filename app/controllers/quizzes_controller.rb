@@ -21,6 +21,7 @@ class QuizzesController < ApplicationController
     if quiz_runner.save
       session[:quiz_runner_id] = quiz_runner.id
       session[:start_time] = Time.now
+      QuizAutocompleteJob.set(wait_until: Time.now + @quiz.time_limit_in_seconds).perform_later(quiz_runner)
       redirect_to question_path(question_slug: questions_sorting_order.first)
     else
       redirect_to quiz_path(@quiz), notice: quiz_runner.errors.to_a
