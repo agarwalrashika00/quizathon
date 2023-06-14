@@ -9,6 +9,8 @@ class QuestionOption < ApplicationRecord
 
   before_validation :set_type
 
+  scope :correct, -> { where(correct: true) }
+
   private
 
   def presence_of_either_data_or_image

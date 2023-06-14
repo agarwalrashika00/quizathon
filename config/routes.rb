@@ -12,35 +12,42 @@ Rails.application.routes.draw do
   end
 
   # Defines the root path route ("/")
-  root 'quizzes#index'
+  scope "(:locale)", locale: /en|es/ do
+    root 'quizzes#index'
+
+    get 'quizzes', to: 'quizzes#index'
+    namespace :admin do
+      resources :users, only: :index
+    end
+  end
 
   namespace :admin do
     resources :users do
-      member do 
-        patch 'block'
-        patch 'unblock'
+      member do
+        patch :block
+        patch :unblock
       end
     end
 
     resources :genres, param: :slug do
       member do 
-        patch 'activate'
-        patch 'inactivate'
+        patch :activate
+        patch :inactivate
       end
     end
 
     resources :questions, param: :slug do
       member do
-        patch 'activate'
-        patch 'inactivate'
+        patch :activate
+        patch :inactivate
       end
     end
 
     resources :quizzes, param: :slug do
       member do 
-        patch 'activate'
-        patch 'inactivate'
-        patch 'feature'
+        patch :activate
+        patch :inactivate
+        patch :feature
       end
     end
 
@@ -48,8 +55,8 @@ Rails.application.routes.draw do
 
     resources :comments do
       member do
-        patch 'publish'
-        patch 'unpublish'
+        patch :publish
+        patch :unpublish
       end
     end
 
@@ -58,19 +65,19 @@ Rails.application.routes.draw do
 
   resources :quizzes, param: :slug do
     member do
-      put 'start'
-      get 'resume'
-      get 'submit'
-      put 'complete'
-      post 'comment'
-      post 'rate'
-      patch 'rate'
+      put :start
+      get :resume
+      get :submit
+      put :complete
+      post :comment
+      post :rate
+      patch :rate
 
       resources :questions, param: :question_slug do
         member do
-          put 'submit'
-          get 'next'
-          get 'previous'
+          put :submit
+          get :next
+          get :previous
         end
       end
 

@@ -8,9 +8,7 @@ class Comment < ApplicationRecord
 
   validate :single_level_nesting
 
-  scope :published, -> {
-    where(published: true)
-  }
+  scope :published, -> { where(published: true) }
 
   def publish
     update_column(:published, true)

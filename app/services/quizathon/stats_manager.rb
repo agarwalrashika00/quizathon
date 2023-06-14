@@ -1,19 +1,33 @@
 module Quizathon
 
-  class StatsController
+  class StatsManager
 
     attr_accessor :user_with_most_quiz, :highest_rated_quiz, :highest_scoring_participant, :quizzes_of_highest_scoring_participant, :commenting_user, :reverse_quiz_count_hash
 
-    def set_user_with_most_quiz(from, to)
-      from ||= 1.month.ago
-      to ||= Time.current
-      user_quiz_count_hash = QuizRunner.between(from, to).select(:user_id).group(:user_id).count
+    def initialize(from, to)
+      @from = from || 1.month.ago
+      @to = to || Time.current
+    end
+
+    def fetch_stats
+      set_user_with_most_quiz
+      set_highest_rated_quiz
+      set_highest_scoring_participant
+      set_commenting_user(Time.current.beginning_of_month..Time.current, 3)
+      set_quizzes_with_participants_count
+      self
+    end
+
+    private
+
+    def set_user_with_most_quiz
+      user_quiz_count_hash = QuizRunner.between(@from, @to).select(:user_id).group(:user_id).count
       user_id = user_quiz_count_hash.key(user_quiz_count_hash.values.max)
       @user_with_most_quiz = User.find_by_id(user_id)
     end
 
     def set_highest_rated_quiz
-      quiz_rating_count_hash = Rating.select(:quiz_id).group(:quiz_id).sum(:rating)
+      quiz_rating_count_hash = Rating.select(:quiz_id).group(:quiz_id).sum(:value)
       quiz_id = quiz_rating_count_hash.key(quiz_rating_count_hash.values.max)
       @highest_rated_quiz = Quiz.find_by_id(quiz_id)
     end

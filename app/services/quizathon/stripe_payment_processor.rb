@@ -1,14 +1,12 @@
 module Quizathon
 
-  class CheckoutsController
+  class StripePaymentProcessor
 
-    def initialize(success_url, cancel_url, quiz, currency, amount, current_user)
+    def initialize(success_url, cancel_url, quiz, user)
       @success_url = success_url
       @cancel_url = cancel_url
       @quiz = quiz
-      @currency = currency
-      @amount = amount
-      @current_user = current_user
+      @current_user = user
     end
 
     def create_stripe_session
@@ -18,8 +16,8 @@ module Quizathon
         mode: "payment",
         line_items: [{
           price_data: {
-            currency: @currency,
-            unit_amount: @amount,
+            currency: @quiz.currency_code || Quizathon::CURRENCY_CODE,
+            unit_amount: @quiz.amount || Quizathon::QUIZ_AMOUNT,
             product_data: {
               name: @quiz.title,
               description: @quiz.description,

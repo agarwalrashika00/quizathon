@@ -1,7 +1,7 @@
 <tr class="h-50 body-row">
   <td><%= rating.quiz.title %></td>
   <td><%= rating.user.full_name %></td>
-  <td><%= rating.rating %></td>
+  <td><%= rating.value %></td>
   <td>
     <%= button_to image_tag('delete.png'), admin_rating_path(rating), method: :delete, class: 'border-0 bg-transparent', title: 'delete' %>
   </td>

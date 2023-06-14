@@ -1,6 +1,6 @@
 class FeaturedQuizMailer < ApplicationMailer
 
-  default from: 'featured@example.com'
+  default from: Quizathon::MAIL_FROM
 
   def featured_quiz_email
     @quiz = params[:quiz]

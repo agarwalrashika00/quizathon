@@ -12,7 +12,7 @@ class QuestionsController < ApplicationController
   end
 
   def submit
-    user_solution = Quizathon::ResponsesController.new(current_user, @quiz_question).submit(marked_option_id)
+    user_solution = Quizathon::ResponsesManager.new(current_user, @quiz_question).submit(marked_option_id)
     next_question_slug = @quiz_runner.find_next_slug(@question.slug)
     if user_solution.errors.blank?
       if next_question_slug.present?
@@ -47,19 +47,19 @@ class QuestionsController < ApplicationController
 
   def set_quiz
     unless @quiz = Quiz.find_by_slug(params[:slug])
-      redirect_to quizzes_path, alert: 'Quiz doesnot exist'
+      redirect_to quizzes_path, alert: t(:quiz_not_found)
     end
   end
 
   def set_question
     unless @question = Question.find_by_slug(params[:question_slug])
-      redirect_to quizzes_path, alert: 'Question doesnot exist'
+      redirect_to quizzes_path, alert: t(:question_not_found)
     end
   end
 
   def set_quiz_runner
-    unless @quiz_runner = QuizRunner.find_by_id(session[:quiz_runner_id])
-      redirect_to quizzes_path, alert: 'Quiz runner doesnot exist'
+    unless @quiz_runner = QuizRunner.find_by(quiz: @quiz, user: current_user)
+      redirect_to quizzes_path, alert: t(:quiz_runner_not_found)
     end
   end
 
@@ -68,13 +68,13 @@ class QuestionsController < ApplicationController
   end
 
   def ensure_quiz_is_not_completed
-    if @quiz_runner.status == 'completed'
+    if @quiz_runner.completed?
       redirect_to quiz_path(@quiz), alert: 'You have already attempted the quiz once.'
     end
   end
 
   def ensure_time_is_not_over
-    @remaining_time = (@quiz.time_limit_in_seconds - (Time.now - session[:start_time].to_time).to_i)
+    @remaining_time = (@quiz.time_limit_in_seconds - (Time.now - @quiz_runner.created_at).to_i)
     if @remaining_time < 0
       redirect_to submit_quiz_path(@quiz), alert: 'Time is over. Submmit the quiz now.'
     end

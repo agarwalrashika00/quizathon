@@ -52,7 +52,7 @@ class Admin::QuizzesController < Admin::BaseController
   private
 
   def quiz_params
-    params.require(:quiz).permit(:title, :description, :level, :time_limit_in_minutes, :featured_at, :quiz_banner, genre_ids: [], quiz_questions_attributes: [:id, :question_id, :active, :_destroy])
+    params.require(:quiz).permit(:title, :description, :level, :time_limit_in_minutes, :featured_at, :quiz_banner, genre_ids: [], quiz_questions_attributes: [:id, :question_id, :active])
   end
 
   def set_quiz
