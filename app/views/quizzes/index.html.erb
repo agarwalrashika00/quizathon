@@ -1,38 +1,7 @@
-<div class="all_quizzes">
-  <% name = current_user&.first_name || 'Stranger' %>
-  <p class='ml-4 lead font-weight-normal text-secondary'>Welcome <%= name %> to</p>
-  <h3 class='ml-4'>Quizathon</h3>
-  <% unless user_signed_in? %>
-    <p class='ml-4'>Please sign_up/sign_in before continuing</p>
-  <% end %>
-  <div class="container-fluid">
-    <% if Quiz.featured.present? %>
-      <div class="row">
-        <h2 class='ml-4 mt-4'>Featured</h2>
-      </div>
-      <div class="row">
-        <%= render partial: 'quiz_card', collection: Quiz.featured, as: :quiz %>
-      </div>
-    <% end %>
-    <div class="row">
-      <div class='col-md-1'></div>
-      <div class='col-md-10'>
-        <%= search_form_for @q do |f| %>
-          <div class="field">
-            <center>
-              <%= f.search_field :title_cont, placeholder: 'Search for quiz title', class: 'w-50 pt-1 pb-2' %>
-              <%= f.submit class: 'btn btn-success' %>
-            </center>
-          </div>
-        <% end %>
-      </div>
-      <div class='col-md-1'></div>
-    </div>
-    <div class="row">
-      <h2 class='ml-4 mt-4'>All Quizzes</h2>
-    </div>
-    <div class="row">
-      <%= render partial: 'quiz_card', collection: @quizzes, as: :quiz %>
-    </div>
-  </div>
-</div>
+<% name = current_user&.first_name || 'Stranger' %>
+<p class='ml-4 lead font-weight-normal text-secondary'>Welcome <%= name %> to</p>
+<h3 class='ml-4'>Quizathon</h3>
+<% unless user_signed_in? %>
+  <p class='ml-4'>Please sign_up/sign_in before continuing</p>
+<% end %>
+<%= render partial: 'quizzes', object: @quizzes, locals: { q: @q } %>

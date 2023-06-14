@@ -55,7 +55,7 @@ class QuizzesController < ApplicationController
     comment = @quiz.comments.build(comment_params)
     if comment.save
       @comments = Comment.where(commentable: @quiz)
-      ActionCable.server.broadcast('comments', { html: render_to_string('quizzes/show', layout: false) })
+      ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false) })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'
     end
@@ -69,11 +69,10 @@ class QuizzesController < ApplicationController
       redirect_to quiz_path(@quiz), notice: 'Rating added successfully.'
       @q = Quiz.where(active: true).ransack(params[:q])
       @quizzes = @q.result(distinct: true)
-      ActionCable.server.broadcast('ratings', { html: render_to_string('quizzes/index', layout: false) })
+      ActionCable.server.broadcast('ratings', { html: render_to_string(partial: 'quizzes/quizzes', object: @quizzes, locals: { q: @q }, layout: false) })
     else
       redirect_to quiz_path(@quiz), alert: 'Rating could not be added.'
     end
-
   end
 
 
