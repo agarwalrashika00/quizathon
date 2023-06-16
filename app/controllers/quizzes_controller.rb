@@ -31,7 +31,7 @@ class QuizzesController < ApplicationController
 
   def submit
     if @quiz_runner.completed?
-      redirect_to quiz_path(@quiz), alert: 'You have already attempted the quiz once.'
+      redirect_to quiz_path(@quiz), alert: 'You have attempted the quiz.'
     end
   end
 
@@ -52,7 +52,7 @@ class QuizzesController < ApplicationController
     if comment.save
       redirect_to quiz_path(@quiz)
       Quizathon::NotificationsManager.new(comment.user, comment.parent_comment, @quiz).notify_parent
-      ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false) })
+      ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false), quiz_id: @quiz.id })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'
     end
@@ -87,6 +87,7 @@ class QuizzesController < ApplicationController
   end
 
   def comment_params
+    params[:comment][:user_id] = current_user.id
     params.require(:comment).permit(:data, :parent_comment_id, :user_id)
   end
 

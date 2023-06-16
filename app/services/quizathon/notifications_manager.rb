@@ -9,11 +9,11 @@ module Quizathon
     end
 
     def notify_in_app?
-      @parent_comment&.user.notification_preferences["in_app"]
+      @parent_comment && @parent_comment.user.notification_preferences["in_app"]
     end
 
     def notify_by_email?
-      @parent_comment&.user.notification_preferences["email"]
+      @parent_comment && @parent_comment.user.notification_preferences["email"]
     end
 
     def notify_parent

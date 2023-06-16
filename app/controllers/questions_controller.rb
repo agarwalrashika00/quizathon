@@ -69,7 +69,7 @@ class QuestionsController < ApplicationController
 
   def ensure_quiz_is_not_completed
     if @quiz_runner.completed?
-      redirect_to quiz_path(@quiz), alert: 'You have already attempted the quiz once.'
+      redirect_to quiz_path(@quiz), alert: 'You have attempted the quiz.'
     end
   end
 
