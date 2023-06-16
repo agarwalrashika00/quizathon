@@ -2,7 +2,7 @@ module Quizathon
 
   class StatsManager
 
-    attr_accessor :user_with_most_quiz, :highest_rated_quiz, :highest_scoring_participant, :quizzes_of_highest_scoring_participant, :commenting_user, :reverse_quiz_count_hash
+    attr_accessor :user_with_most_quiz, :highest_rated_quiz, :highest_scoring_participant, :quizzes_of_highest_scoring_participant, :commenting_user, :quiz_users_count_hash
 
     def initialize(from, to)
       @from = from || 1.month.ago
@@ -21,33 +21,29 @@ module Quizathon
     private
 
     def set_user_with_most_quiz
-      user_quiz_count_hash = QuizRunner.between(@from, @to).select(:user_id).group(:user_id).count
-      user_id = user_quiz_count_hash.key(user_quiz_count_hash.values.max)
+      user_id = QuizRunner.between(@from, @to).select(:user_id, 'count(*) AS quiz_count').group(:user_id).order(quiz_count: :desc).first.user_id
       @user_with_most_quiz = User.find_by_id(user_id)
     end
 
     def set_highest_rated_quiz
-      quiz_rating_count_hash = Rating.select(:quiz_id).group(:quiz_id).sum(:value)
-      quiz_id = quiz_rating_count_hash.key(quiz_rating_count_hash.values.max)
+      quiz_id = Rating.select(:quiz_id, 'SUM(value) as total_rating').group(:quiz_id).order(total_rating: :desc).first.quiz_id
       @highest_rated_quiz = Quiz.find_by_id(quiz_id)
     end
 
     def set_highest_scoring_participant
-      user_total_score_hash = QuizRunner.select(:user_id).group(:user_id).sum(:score)
-      user_id = user_total_score_hash.key(user_total_score_hash.values.max)
+      user_id = QuizRunner.select(:user_id, 'SUM(score) AS total_score').group(:user_id).order(total_score: :desc).first.user_id
       @highest_scoring_participant = User.find_by_id(user_id)
-      @quizzes_of_highest_scoring_participant = Quiz.where(id: QuizRunner.where(created_at: 2.month.ago..Time.current, user_id: user_id).pluck(:quiz_id))
+      @quizzes_of_highest_scoring_participant = @highest_scoring_participant.quizzes.where(id: QuizRunner.where(created_at: 2.month.ago..Time.current).pluck(:quiz_id))
     end
 
     def set_commenting_user(time_range, min_no_of_quizzes_commented)
-      commmenting_user_ids = Comment.where(created_at: time_range).where(commentable_type: 'Quiz').order(created_at: :desc).pluck(:user_id, :commentable_id).uniq.map(&:first)
-      user_comments_count_hash = commmenting_user_ids.uniq.map{ |v| [v, commmenting_user_ids.count(v)]}.to_h
-      user_id = user_comments_count_hash.key(user_comments_count_hash.values.max) if user_comments_count_hash.values.max >= min_no_of_quizzes_commented
+      user_id = Comment.where(created_at: time_range, commentable_type: 'Quiz').select(:user_id, 'COUNT (DISTINCT commentable_id) as quizzes_count').group(:user_id).having('COUNT (DISTINCT commentable_id) >= ?', min_no_of_quizzes_commented).order(quizzes_count: :desc).first&.user_id
       @commenting_user = User.find_by_id(user_id)
     end
 
     def set_quizzes_with_participants_count
-      @reverse_quiz_count_hash = QuizRunner.select(:quiz_id).group(:quiz_id).count.sort_by{ |k, v| v }.reverse
+      quiz_users_count_records = QuizRunner.select(:quiz_id, 'COUNT(user_id) AS users_count').group(:quiz_id).order(users_count: :desc)
+      @quiz_users_count_hash = quiz_users_count_records.map { |record| [Quiz.find_by_id(record.quiz_id), record.users_count] }.to_h
     end
 
   end

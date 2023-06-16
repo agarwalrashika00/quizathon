@@ -37,11 +37,11 @@
       <th class="text-center">Participants count</th>
       <th class="text-center">Revenue generated(Rs.)</th>
     </tr>
-    <% @stats_manager.reverse_quiz_count_hash.each do |quiz_id, count| %>
+    <% @stats_manager.quiz_users_count_hash.each do |quiz, users_count| %>
       <tr>
-        <td class="text-center"><%= Quiz.find_by_id(quiz_id)&.title %></td>
-        <td class="text-center"><%= count %></td>
-        <td class="text-center"><%= Quiz.find_by_id(quiz_id)&.payments&.size.to_i * 5 %></td>
+        <td class="text-center"><%= quiz.title %></td>
+        <td class="text-center"><%= users_count %></td>
+        <td class="text-center"><%= quiz&.payments&.size.to_i * 5 %></td>
       </tr>
     <% end %>
   </table>
