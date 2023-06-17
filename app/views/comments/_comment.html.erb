@@ -1,4 +1,5 @@
 <div class="all_comments">
+  <div style="visibility: hidden" data-quiz-id="<%= @quiz.id %>" id="quiz-id"></div>
   <% if comment.parent_comment_id.blank? %>
     <div class="row mt-4">
       <div class="col-xs-1 pt-1 mr-2">
