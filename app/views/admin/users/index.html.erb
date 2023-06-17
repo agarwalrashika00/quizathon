@@ -1,5 +1,5 @@
-<%= link_to '&plus;'.html_safe + ' Create new', new_admin_user_path, class: 'btn btn-dark mt-2 mr-2 float-right border' %>
-<h2 class="text-center">Users</h2>
+<%= link_to '&plus;'.html_safe + " #{t('.create_new')}", new_admin_user_path, class: 'btn btn-dark mt-2 mr-2 float-right border' %>
+<h2 class="text-center"><%= t('.users') %></h2>
 <div class="container-fluid pl-0 pr-0">
   <%= search_form_for [:admin, @q] do |f| %>
     <%= render 'filter', f: f %>

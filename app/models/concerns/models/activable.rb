@@ -3,7 +3,7 @@ module Models::Activable
   extend ActiveSupport::Concern
 
   def activate
-    update_column(:active, true)
+    update(active: true)
   end
 
   def inactivate

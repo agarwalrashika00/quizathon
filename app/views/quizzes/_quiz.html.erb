@@ -29,10 +29,12 @@
           </div>
         <% end %>
         <div class='mt-1'>
-          <% if current_user && has_completed(current_user, quiz) %>
-            <div class='btn btn-info'>Score: <%= compute_score(current_user, quiz) %></div>
+          <% if current_user && current_user.has_completed?(quiz) %>
+            <div class='btn btn-info'>
+              Score: <%= current_user.score_of(quiz) %>
+            </div>
           <% elsif @can_play %>
-            <% if current_user && has_started(current_user, quiz) %>
+            <% if current_user && current_user.has_started?(quiz) %>
               <b>Resume quiz</b>
               <%= link_to image_tag('play.png', width: '30px'), resume_quiz_path(quiz), class: 'border-0 bg-transparent' %>
             <% else %>

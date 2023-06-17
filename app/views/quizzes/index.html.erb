@@ -1,7 +1,7 @@
-<% name = current_user&.first_name || 'Stranger' %>
-<p class='ml-4 lead font-weight-normal text-secondary'>Welcome <%= name %> to</p>
-<h3 class='ml-4'>Quizathon</h3>
+<% name = current_user&.first_name || t('.stranger') %>
+<p class='ml-4 lead font-weight-normal text-secondary'><%= "#{t('.welcome')} #{name} #{t('.to')}" %></p>
+<h3 class='ml-4'><%= t(:title) %></h3>
 <% unless user_signed_in? %>
-  <p class='ml-4'>Please sign_up/sign_in before continuing</p>
+  <p class='ml-4'><%= t(:unauthorized_msg) %></p>
 <% end %>
 <%= render partial: 'quizzes', object: @quizzes, locals: { q: @q } %>

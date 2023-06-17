@@ -1,28 +1,28 @@
 <div class="row h-50 body-row">
   <div class="col-sm-6 mt-2 ransack-col">
     <div class='field'>
-      <%= f.label :email_or_first_name_or_last_name_cont, 'Name or email', class: 'mb-0' %>
+      <%= f.label :email_or_first_name_or_last_name_cont, t('.name_or_email'), class: 'mb-0' %>
       <%= f.search_field :email_or_first_name_or_last_name_cont %>
     </div>
   </div>
 </div>
 <div class="row h-50 body-row">
   <div class="col-sm-4 mt-2 ransack-col">
-    <%= f.label :role_eq, 'Choose role', class: 'mb-0' %>
+    <%= f.label :role_eq, t('.choose_role'), class: 'mb-0' %>
     <%= f.select :role_eq, User.roles.to_a.map { |w| [w[0].humanize, w[1]] }, include_blank: true %>
   </div>
   <div class="col-sm-4 mt-2 ransack-col">
-    <%= f.label :blocked_true, 'Choose if blocked', class: 'mb-0' %>
+    <%= f.label :blocked_true, t('.blocked'), class: 'mb-0' %>
     <%= f.select :blocked_true, [[:blocked, 1], [:unblocked, 0]], include_blank: true %>
   </div>
   <div class="col-sm-4 mt-2 ransack-col">
-    <%= f.label :confirmed_at_null, 'Choose if confirmed', class: 'mb-0' %>
+    <%= f.label :confirmed_at_null, t('.confirmed'), class: 'mb-0' %>
     <%= f.select :confirmed_at_null, [[:confirmed, 0], [:unconfirmed, 1]], include_blank: true %>
   </div>
 </div>
 <div class="row h-50 body-row">
   <div class="actions mt-2 ml-3">
-    <%= link_to "Clear", admin_users_path, class: "btn btn-default border border-dark" %>
-    <%= f.submit "Search", class: 'btn btn-primary border' %>
+    <%= link_to t('.clear'), admin_users_path, class: "btn btn-default border border-dark" %>
+    <%= f.submit t('.search'), class: 'btn btn-primary border' %>
   </div>
 </div>

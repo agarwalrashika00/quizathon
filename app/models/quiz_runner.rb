@@ -6,21 +6,21 @@ class QuizRunner < ApplicationRecord
   enum status: { started: 0, unrated: 1, completed: 2 }
 
   validates :user_id, uniqueness: { scope: :quiz_id, message: 'You have already given the quiz' }
-  validate :user_pays_after_second_quiz, on: :create
+  validate :user_can_play_quiz, on: :create
 
-  scope :between, -> (from, to) {
-    where(created_at: from..to)
-  }
+  after_create_commit :autocomplete_quiz
+
+  scope :between, -> (from, to) { where(created_at: from..to) }
+
+  scope :completed, -> { where(status: 'completed') }
 
   def find_next_slug(current_question_slug)
-    sorting_order_array = questions_sorting_order[1...-1].split(',')
-    sorting_order_array[sorting_order_array.find_index(current_question_slug) + 1]
+    questions_sorting_order[questions_sorting_order.find_index(current_question_slug) + 1]
   end
 
   def find_previous_slug(current_question_slug)
-    sorting_order_array = questions_sorting_order[1...-1].split(',')
-    unless sorting_order_array.find_index(current_question_slug) == 0
-      sorting_order_array[sorting_order_array.find_index(current_question_slug) - 1]
+    unless questions_sorting_order.find_index(current_question_slug) == 0
+      questions_sorting_order[questions_sorting_order.find_index(current_question_slug) - 1]
     end
   end
 
@@ -48,12 +48,16 @@ class QuizRunner < ApplicationRecord
 
   private
 
-  def user_pays_after_second_quiz
-    if QuizRunner.where(user_id: user.id).count >= 2
-      unless QuizOrder.exists?(user_id: user.id, quiz_id: quiz.id, status: 'paid')
+  def user_can_play_quiz
+    if QuizRunner.where(user_id: user.id).count >= Quizathon::FREE_QUIZ_COUNT
+      unless Payment.exists?(user_id: user.id, quiz_id: quiz.id, status: 'paid')
         errors.add :base, 'User cannnot give another quiz without paying first'
       end
     end
+  end
+
+  def autocomplete_quiz
+    QuizAutocompleteJob.set(wait_until: Time.now + quiz.time_limit_in_seconds).perform_later(self)
   end
 
 end

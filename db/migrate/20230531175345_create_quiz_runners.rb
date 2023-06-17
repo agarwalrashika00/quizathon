@@ -5,7 +5,7 @@ class CreateQuizRunners < ActiveRecord::Migration[7.0]
       t.references :quiz
       t.integer :status
       t.integer :score
-      t.string :questions_sorting_order
+      t.text :questions_sorting_order, array: true, default: []
       t.integer :current_question_number
 
       t.timestamps

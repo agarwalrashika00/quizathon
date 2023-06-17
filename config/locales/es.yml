@@ -25,56 +25,53 @@
 #
 # en:
 #   "true": "foo"
-#
-# To learn more, please read the Rails Internationalization guide
-# available at https://guides.rubyonrails.org/i18n.html.
 
-en:
+es:
   hello: "Hello world"
 
-  quiz_not_found: Quiz not found
+  quiz_not_found: Quizaro na dere
 
-  question_not_found: Question not found
+  question_not_found: Questana na dere
 
-  quiz_runner_not_found: Quiz runner not found
+  quiz_runner_not_found: Quizaro runnera na dere
 
-  title: Quizathon
+  title: Quiizaathon
 
-  unauthorized_msg: Please sign_up/sign_in before continuing
+  unauthorized_msg: Regístrese/regístrese antes de continuar
 
-  featured: Featured
+  featured: Presentada
 
-  all_quizzes: 'All Quizzes'
+  all_quizzes: 'All Quizaros'
 
   quizzes:
     index:
-      welcome: Welcome
-      stranger: Stranger
-      to: to
+      welcome: bienvenida
+      stranger: extraño
+      to: a
 
     quiz_card:
-      level: Level
-      average_rating: Average Rating
-      unrated: UNRATED
-      show: Show
+      level: Levelo
+      average_rating: Avorag Rating
+      unrated: Unrato
+      show: espectáculo
 
   admin:
     users:
       index:
-        users: Users
-        create_new: Create new
+        users: Usuarias
+        create_new: Creta nava
 
       filter:
-        name_or_email: Name or email
-        choose_role: Choose a role
-        blocked: Blocked?
-        confirmed: Confirmed?
-        clear: Clear
-        search: Search
+        name_or_email: Nomero or emaila
+        choose_role: Choosa rolero
+        blocked: blockedo?
+        confirmed: Comfirmo?
+        clear: Claro
+        search: Searcho
 
   active_record:
     models:
       user: User
     attributes:
       user:
-        email: Email
+        email: EEE

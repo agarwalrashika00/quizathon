@@ -17,16 +17,14 @@ class Question < ApplicationRecord
 
   before_validation ActivableCallbacks, on: :update
 
-  scope :active, -> {
-    where(active: true)
-  }
+  scope :active, -> { where(active: true) }
 
   def to_param
     slug
   end
 
   def correct_option
-    question_options.find_by(correct: true)
+    question_options.correct.first
   end
 
   def self.ransackable_attributes(auth_object = nil)
@@ -40,7 +38,7 @@ class Question < ApplicationRecord
   private
 
   def only_one_correct_option
-    unless question_options.where(correct: true).count == 1
+    unless question_options.correct.count == 1
       errors.add :base, 'Choose exactly one correct option.'
     end
   end
