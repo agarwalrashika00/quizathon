@@ -1,0 +1,24 @@
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <div class='field'>
+      <%= f.label :user_first_name_or_user_last_name_cont, 'User', class: 'mb-0' %>
+      <%= f.search_field :user_first_name_or_user_last_name_cont %>
+    </div>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :quiz_id_eq, 'Quiz', class: 'mb-0' %>
+    <%= f.collection_select :quiz_id_eq, Quiz.all, :id, :title, include_blank: true %>
+  </div>
+  <div class="col-sm-6 mt-2 ransack-col">
+    <%= f.label :currency_code_eq, 'Currency code', class: 'mb-0' %>
+    <%= f.select :currency_code_eq, [:inr, :usd], include_blank: true %>
+  </div>
+</div>
+<div class="row h-50 body-row">
+  <div class="actions mt-2 ml-3">
+    <%= link_to "Clear", admin_payments_path, class: "btn btn-default border border-dark" %>
+    <%= f.submit "Search", class: 'btn btn-primary border' %>
+  </div>
+</div>
