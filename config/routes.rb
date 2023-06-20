@@ -61,6 +61,7 @@ Rails.application.routes.draw do
     end
 
     resources :ratings
+    resources :payments, only: :index
   end
 
   resources :quizzes, param: :slug do
