@@ -2,14 +2,14 @@
   <div class="container-fluid">
     <% if Quiz.featured.present? %>
       <div class="row">
-        <h2 class='ml-4 mt-4'>Featured</h2>
+        <h2 class='ml-4 mt-4'><%= t(:featured) %></h2>
       </div>
       <div class="row">
         <%= render partial: 'quiz_card', collection: Quiz.featured, as: :quiz %>
       </div>
     <% end %>
     <div class="row">
-      <h2 class='ml-4 mt-4'>All Quizzes</h2>
+      <h2 class='ml-4 mt-4'><%= t(:all_quizzes) %></h2>
     </div>
     <div class="row">
       <div class='col-md-1'></div>

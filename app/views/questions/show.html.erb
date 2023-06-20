@@ -3,10 +3,13 @@
     <div class="row w-100">
       <div class="col-sm-6">
         <div class='timer'>
-          00:<%= @remaining_time %>
+          00:
+          <div id="countdown" data-quiz-slug="<%= @quiz.slug %>">
+            <%= @remaining_time %>
+          </div>
         </div>
       </div>
-      <div class="col-sm-6 text-right ">
+      <div class="col-sm-6 text-right">
         <h4>Score: <%= @question.score %></h4>
       </div>
     </div>
@@ -26,8 +29,8 @@
     <% end %>
     <%= form.hidden_field :user_id, value: current_user.id %>
     <%= form.hidden_field :quiz_question_id, value: @quiz_question.id %>
-    <%= link_to 'Previous', previous_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark', remote: true %>
-    <%= form.submit 'Submit', class: 'btn btn-dark' %>
-    <%= link_to 'Next', next_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark' %>
+    <%= link_to 'Previous', previous_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark', remote: true, data: { turbo: false } %>
+    <%= form.submit 'Submit and next', class: 'btn btn-dark', data: { turbo: false } %>
+    <%= link_to 'Next', next_question_path(@quiz, question_slug: @question.slug), class: 'btn btn-dark', data: { turbo: false } %>
   <% end %>
 </div>

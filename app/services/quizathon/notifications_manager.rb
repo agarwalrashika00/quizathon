@@ -1,6 +1,6 @@
 module Quizathon
 
-  class NotificationsController
+  class NotificationsManager
 
     def initialize(commenter, parent_comment, quiz)
       @commenter = commenter
@@ -9,15 +9,11 @@ module Quizathon
     end
 
     def notify_in_app?
-      if @parent_comment && @parent_comment.user.notification_preferences["in_app"]
-        true
-      end
+      @parent_comment && @parent_comment.user.notification_preferences["in_app"]
     end
 
     def notify_by_email?
-      if @parent_comment && @parent_comment.user.notification_preferences["email"]
-        true
-      end
+      @parent_comment && @parent_comment.user.notification_preferences["email"]
     end
 
     def notify_parent

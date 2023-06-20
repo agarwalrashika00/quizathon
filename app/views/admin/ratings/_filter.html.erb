@@ -12,8 +12,8 @@
     <%= f.collection_select :quiz_id_eq, Quiz.all, :id, :title, include_blank: true %>
   </div>
   <div class="col-sm-6 mt-2 ransack-col">
-    <%= f.label :rating_eq, 'Rating', class: 'mb-0' %>
-    <%= f.select :rating_eq, [1,2,3,4,5], include_blank: true %>
+    <%= f.label :value_eq, 'Rating', class: 'mb-0' %>
+    <%= f.select :value_eq, [1,2,3,4,5], include_blank: true %>
   </div>
 </div>
 <div class="row h-50 body-row">

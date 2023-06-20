@@ -9,15 +9,15 @@
         <% end %>
       </center>
       <h4><%= quiz.title %></h4>
-      <p>Level: <%= quiz.level %></p>
+      <p><%= t('.level') %>: <%= quiz.level %></p>
       <h5>
         <% quiz.genres.each do |genre| %>
           <div class="btn btn-secondary pt-0 pb-0 pl-1 pr-1 genre-button"><%= genre.title %></div>
         <% end %>
       </h5>
-      Average Rating:
+      <%= t('.average_rating') %>
       <% if quiz.average_rating == 'unrated' %>
-        UNRATED
+        <%= t('.unrated') %>
       <% else %>
         <h1 style="display: inline">
           <%  quiz.average_rating.to_i.times do  %>
@@ -32,7 +32,7 @@
           <% end %>
         </h1>
       <% end %>
-      <%= link_to 'Show', quiz_path(quiz), class: 'btn btn-info w-25 ml-auto mr-auto' %>
+      <%= link_to t('.show'), quiz_path(quiz), class: 'btn btn-info ml-auto mr-auto mt-1' %>
     </div>
   </center>
 </div>

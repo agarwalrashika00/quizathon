@@ -2,24 +2,23 @@ class Quiz < ApplicationRecord
 
   include Sluggable
   include Models::Activable
-  include ActiveModel::Serializers::JSON
 
   attr_accessor :time_limit_in_minutes
   enum level: { beginner: 1, easy: 2, moderate: 3, difficult: 4, advance: 5 }
 
   has_and_belongs_to_many :genres
   has_many :quiz_questions, dependent: :destroy
-  has_many :active_quiz_questions, -> { where(active: true) }, class_name: 'QuizQuestion'
   has_many :questions, through: :quiz_questions
+  has_many :active_quiz_questions, -> { where(active: true) }, class_name: 'QuizQuestion'
   has_many :active_questions, -> { where(active: true) }, through: :active_quiz_questions, source: :question
-  accepts_nested_attributes_for :quiz_questions, allow_destroy: true
+  accepts_nested_attributes_for :quiz_questions
   has_one_attached :quiz_banner
-  has_many :comments, as: :commentable
-  has_many :ratings
-  has_many :quiz_runners
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :ratings, dependent: :destroy
+  has_many :quiz_runners, dependent: :destroy
   has_many :started_quiz_runners, -> { where(status: 'started') }, class_name: 'QuizRunner'
   has_many :users, through: :quiz_runners
-  has_many :quiz_orders
+  has_many :payments, dependent: :destroy
 
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }
@@ -28,13 +27,16 @@ class Quiz < ApplicationRecord
   validates :description, allow_blank: true, format: {
     without: Quizathon::URL_REGEXP
   }
+  validates :amount, numericality: true
 
   before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
   before_validation ActivableCallbacks, on: :update
   after_save_commit :schedule_mail_if_featured
 
+  scope :active, -> { where(active: true) }
+
   scope :featured, -> {
-    where(active: true).where('featured_at is not null').select { |quiz| Time.current > quiz.featured_at && Time.current < quiz.featured_at + 1.day }
+    active.where.not(featured_at: nil).where('featured_at < ? AND featured_at > ?', Time.current, Time.current - 1.day)
   }
 
   def to_param
@@ -42,11 +44,11 @@ class Quiz < ApplicationRecord
   end
 
   def average_rating
-    ratings = self.ratings.pluck(:rating)
-    if ratings.count.zero?
-      'unrated'
+    all_ratings = ratings.pluck(:value)
+    if all_ratings.present?
+      all_ratings.sum.to_f / all_ratings.count
     else
-      ratings.sum.to_f / ratings.count
+      'unrated'
     end
   end
 
@@ -60,10 +62,6 @@ class Quiz < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     []
-  end
-
-  def serialize
-    serializable_hash(only: [:slug, :title, :description, :time_limit_in_seconds, :level])
   end
 
   private
@@ -82,7 +80,7 @@ class Quiz < ApplicationRecord
 
   def schedule_mail_if_featured
     if featured_at_before_last_save != featured_at && (featured_at - 10.minutes) > Time.current
-      SendMailForFeaturedQuizJob.set(wait_until: featured_at - 10.minutes).perform_later(self)
+      FeaturedQuizMailSchedulerJob.set(wait_until: featured_at - 10.minutes).perform_later(self)
     end
   end
 

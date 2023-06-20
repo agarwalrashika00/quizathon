@@ -1,6 +1,6 @@
 module Quizathon
 
-  class ResponsesController
+  class ResponsesManager
 
     def initialize(user, quiz_question)
       @user = user

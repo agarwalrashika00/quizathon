@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_13_173859) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -92,6 +92,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "payments", force: :cascade do |t|
+    t.string "session_id"
+    t.bigint "quiz_id"
+    t.bigint "user_id"
+    t.string "status"
+    t.integer "amount"
+    t.string "currency_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["quiz_id"], name: "index_payments_on_quiz_id"
+    t.index ["user_id"], name: "index_payments_on_user_id"
+  end
+
   create_table "question_options", force: :cascade do |t|
     t.bigint "question_id"
     t.string "type"
@@ -113,19 +126,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "quiz_orders", force: :cascade do |t|
-    t.string "session_id"
-    t.bigint "quiz_id"
-    t.bigint "user_id"
-    t.string "status"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "amount"
-    t.string "currency_code"
-    t.index ["quiz_id"], name: "index_quiz_orders_on_quiz_id"
-    t.index ["user_id"], name: "index_quiz_orders_on_user_id"
-  end
-
   create_table "quiz_questions", force: :cascade do |t|
     t.bigint "quiz_id"
     t.bigint "question_id"
@@ -141,7 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
     t.bigint "quiz_id"
     t.integer "status"
     t.integer "score"
-    t.string "questions_sorting_order"
+    t.text "questions_sorting_order", default: [], array: true
     t.integer "current_question_number"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -160,12 +160,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_13_091759) do
     t.bigint "created_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "amount"
+    t.string "currency_code"
   end
 
   create_table "ratings", force: :cascade do |t|
     t.bigint "quiz_id"
     t.bigint "user_id"
-    t.integer "rating"
+    t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["quiz_id"], name: "index_ratings_on_quiz_id"

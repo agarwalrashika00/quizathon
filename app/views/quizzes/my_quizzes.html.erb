@@ -1,1 +1,4 @@
+<% if @quizzes.blank? %>
+  You haven't attempted any quiz! <%= link_to 'Click here', quizzes_path %> to try some quiz.
+<% end %>
 <%= render @quizzes %>
