@@ -23,6 +23,11 @@
     <ul class="navbar-nav ml-auto">
       <% if user_signed_in? %>
         <div style="visibility: hidden" data-user-id="<%= current_user.id %>" class="user-id"></div>
+        <div>
+          <% if current_user.admin? %>
+            <%= link_to 'Admin end', admin_users_path, class: 'btn btn-default mt-2' %>
+          <% end %>
+        </div>
         <div class="mt-2 mr-2">
           <%= link_to notifications_path do %>
             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="black" class="bi bi-bell" viewBox="0 0 16 16">

@@ -1,9 +1,17 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg pl-auto">
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav container-fluid pl-0 pr-0">
-      <li class="nav-item">
+    <ul class="pl-0 pr-0">
+      <li>
         <%= link_to '&#x1F3E0;'.html_safe, root_path, class: 'pt-0 pb-0 mr-0 ml-0 side-navbar-logo' %>
       </li>
+      <li><%= link_to 'USERS', admin_users_path %></li>
+      <li><%= link_to 'GENRES', admin_genres_path %></li>
+      <li><%= link_to 'QUESTIONS', admin_questions_path %></li>
+      <li><%= link_to 'QUIZZES', admin_quizzes_path %></li>
+      <li><%= link_to 'PAYMENTS', admin_payments_path %></li>
+      <li><%= link_to 'COMMENTS', admin_comments_path %></li>
+      <li><%= link_to 'RATINGS', admin_ratings_path %></li>
+      <li><%= link_to 'STATS', admin_stats_path %></li>
     </ul>
   </div>
 </nav>

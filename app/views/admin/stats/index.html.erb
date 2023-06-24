@@ -3,10 +3,10 @@
     <b>Participant who has taken the most quiz between: </b>
     <%= form_with url: '/admin/stats', method: :get do |form| %>
       From:
-      <%= form.date_field :from %>
+      <%= form.date_field :from, value: (params[:from] || 1.month.ago.to_date) %>
       &nbsp; &nbsp;
       To:
-      <%= form.date_field :to %>
+      <%= form.date_field :to, value: (params[:to] || Date.current) %>
       &nbsp; &nbsp;
       <%= form.submit 'Show', class: 'btn btn-info'  %>
     <% end %>

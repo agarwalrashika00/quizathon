@@ -27,7 +27,7 @@ class Quiz < ApplicationRecord
   validates :description, allow_blank: true, format: {
     without: Quizathon::URL_REGEXP
   }
-  validates :amount, numericality: true
+  validates :amount, numericality: { greater_than: 0 }
 
   before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
   before_validation ActivableCallbacks, on: :update
@@ -36,7 +36,7 @@ class Quiz < ApplicationRecord
   scope :active, -> { where(active: true) }
 
   scope :featured, -> {
-    active.where.not(featured_at: nil).where('featured_at < ? AND featured_at > ?', Time.current, Time.current - 1.day)
+    active.where('featured_at < ? AND featured_at > ?', Time.current, Time.current - 1.day)
   }
 
   def to_param
@@ -44,12 +44,7 @@ class Quiz < ApplicationRecord
   end
 
   def average_rating
-    all_ratings = ratings.pluck(:value)
-    if all_ratings.present?
-      all_ratings.sum.to_f / all_ratings.count
-    else
-      'unrated'
-    end
+    ratings.average(:value)
   end
 
   def feature_now

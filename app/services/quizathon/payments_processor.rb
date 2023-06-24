@@ -2,15 +2,17 @@ module Quizathon
 
   class PaymentsProcessor
 
+    attr_accessor :errors
+
     def initialize(user, quiz)
       @user = user
       @quiz = quiz
     end
 
     def update_payment
-      if @user && (payment = Payment.where(user: @user, quiz_id: @quiz.id).last) && payment.session_id && payment.status != 'paid'
+      if @user && (payment = @user.payments.where(quiz_id: @quiz.id).last) && payment.session_id && payment.status != 'paid'
         payment.status = Stripe::Checkout::Session.retrieve(payment.session_id)[:payment_status]
-        payment.save
+        @errors = payment.errors.full_messages unless payment.save
       end
     end
 

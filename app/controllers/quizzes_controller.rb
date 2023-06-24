@@ -12,6 +12,7 @@ class QuizzesController < ApplicationController
   def show
     payments_manager = Quizathon::PaymentsProcessor.new(current_user, @quiz)
     payments_manager.update_payment
+    flash[:alert] = payments_manager.errors if payments_manager.errors.present?
     @can_play = payments_manager.user_can_play_quiz?
   end
 
@@ -48,7 +49,7 @@ class QuizzesController < ApplicationController
   end
 
   def comment
-    comment = @quiz.comments.build(comment_params)
+    comment = @quiz.comments.build(comment_params.merge(user_id: current_user.id))
     if comment.save
       redirect_to quiz_path(@quiz)
       Quizathon::NotificationsManager.new(comment.user, comment.parent_comment, @quiz).notify_parent
@@ -87,7 +88,6 @@ class QuizzesController < ApplicationController
   end
 
   def comment_params
-    params[:comment][:user_id] = current_user.id
     params.require(:comment).permit(:data, :parent_comment_id, :user_id)
   end
 
