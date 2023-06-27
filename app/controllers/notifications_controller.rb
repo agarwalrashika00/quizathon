@@ -3,8 +3,8 @@ class NotificationsController < ApplicationController
   after_action :update_new_notifications, only: :index
 
   def index
-    @new_notifications = current_user.notifications.unread.all
-    @old_notifications = current_user.notifications.read.where(created_at: 2.days.ago..Time.current)
+    @new_notifications = current_user.notifications.unread
+    @old_notifications = current_user.notifications.read.recent
   end
 
   private

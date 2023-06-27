@@ -1,8 +1,9 @@
 class QuizzesController < ApplicationController
 
   skip_before_action :authenticate_user!, only: [:index, :show]
-  before_action :set_quiz, except: [:my_quizzes, :index]
+  before_action :set_quiz, except: [:index]
   before_action :set_quiz_runner, only: [:resume, :submit, :complete]
+  before_action :ensure_quiz_not_completed, only: :submit
 
   def index
     @q = Quiz.where(active: true).ransack(params[:q])
@@ -12,13 +13,13 @@ class QuizzesController < ApplicationController
   def show
     payments_manager = Quizathon::PaymentsProcessor.new(current_user, @quiz)
     payments_manager.update_payment
-    flash[:alert] = payments_manager.errors if payments_manager.errors.present?
+    flash[:alert] = payments_manager.errors.join(',') if payments_manager.errors.present?
     @can_play = payments_manager.user_can_play_quiz?
   end
 
   def start
     questions_sorting_order = @quiz.active_questions.pluck(:slug).shuffle
-    quiz_runner = QuizRunner.new(user: current_user, quiz: @quiz, status: 'started', questions_sorting_order: questions_sorting_order)
+    quiz_runner = current_user.quiz_runners.build(quiz: @quiz, status: 'started', questions_sorting_order: questions_sorting_order)
     if quiz_runner.save
       redirect_to question_path(question_slug: questions_sorting_order.first)
     else
@@ -30,12 +31,6 @@ class QuizzesController < ApplicationController
     redirect_to question_path(question_slug: @quiz_runner.questions_sorting_order.first )
   end
 
-  def submit
-    if @quiz_runner.completed?
-      redirect_to quiz_path(@quiz), alert: 'You have attempted the quiz.'
-    end
-  end
-
   def complete
     if @quiz_runner.complete_quiz
       redirect_to quiz_path(@quiz), notice: 'You successfully completed the quiz. Try some other quiz.'
@@ -44,15 +39,10 @@ class QuizzesController < ApplicationController
     end
   end
 
-  def my_quizzes
-    @quizzes = Quiz.where(id: current_user.quiz_runners.completed.pluck(:quiz_id))
-  end
-
   def comment
     comment = @quiz.comments.build(comment_params.merge(user_id: current_user.id))
     if comment.save
       redirect_to quiz_path(@quiz)
-      Quizathon::NotificationsManager.new(comment.user, comment.parent_comment, @quiz).notify_parent
       ActionCable.server.broadcast('comments', { html: render_to_string(@quiz.comments.published, layout: false), quiz_id: @quiz.id })
     else
       render 'quizzes/show', alert: 'Your comment could not be added.'
@@ -89,6 +79,12 @@ class QuizzesController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:data, :parent_comment_id, :user_id)
+  end
+
+  def ensure_quiz_not_completed
+    if @quiz_runner.completed?
+      redirect_to quiz_path(@quiz), alert: 'You have attempted the quiz.'
+    end
   end
 
 end

@@ -22,7 +22,7 @@ class Quiz < ApplicationRecord
 
   validates :title, presence: true
   validates :time_limit_in_seconds, numericality: { greater_than: 0 }
-  validates_length_of :title_word_count, minimum: 5, message: 'should be at least 5', if: -> { title.present? }
+  validates_length_of :title_word_count, minimum: 5, message: 'should be at least 5', if: :title?
   validates_length_of :description_word_count, minimum: 15, if: :description?
   validates :description, allow_blank: true, format: {
     without: Quizathon::URL_REGEXP
@@ -31,7 +31,7 @@ class Quiz < ApplicationRecord
 
   before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
   before_validation ActivableCallbacks, on: :update
-  after_save_commit :schedule_mail_if_featured
+  after_save_commit :schedule_mail_if_featured, if: :featured?
 
   scope :active, -> { where(active: true) }
 
