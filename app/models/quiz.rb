@@ -31,6 +31,7 @@ class Quiz < ApplicationRecord
 
   before_validation :set_time_limit_in_seconds, if: -> { time_limit_in_minutes.present? }
   before_validation ActivableCallbacks, on: :update
+  before_save ActivableCallbacks
   after_save_commit :schedule_mail_if_featured, if: :featured?
 
   scope :active, -> { where(active: true) }
@@ -57,6 +58,10 @@ class Quiz < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     []
+  end
+
+  def publishable?
+    questions.length >= 10 && questions.length == questions.map(&:publishable?).count(true) 
   end
 
   private

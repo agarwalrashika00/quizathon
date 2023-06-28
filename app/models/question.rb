@@ -16,6 +16,8 @@ class Question < ApplicationRecord
   validate :only_one_correct_option
 
   before_validation ActivableCallbacks, on: :update
+  before_save ActivableCallbacks
+  after_commit :update_quiz, on: [:update, :destroy]
 
   scope :active, -> { where(active: true) }
 
@@ -35,6 +37,10 @@ class Question < ApplicationRecord
     []
   end
 
+  def publishable?
+    question_options.length >= 4
+  end
+
   private
 
   def only_one_correct_option
@@ -49,6 +55,15 @@ class Question < ApplicationRecord
       count -= 1 if option.marked_for_destruction?
     end
     errors.add :base, 'enter exactly 4 options' unless count == 4
+  end
+
+  def update_quiz
+    quiz.inactivate unless quiz.publishable?
+
+    if quiz_id_before_last_save && quiz_id_before_last_save != quiz_id
+      previous_quiz = Quiz.find_by_id(quiz_id_before_last_save)
+      previous_quiz.inactivate unless previous_quiz.publishable?
+    end
   end
 
 end
