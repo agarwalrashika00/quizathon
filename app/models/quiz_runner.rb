@@ -32,14 +32,6 @@ class QuizRunner < ApplicationRecord
     QuestionOption.where(id: marked_option_ids).where(correct: true)
   end
 
-  def compute_total_score
-    score = 0
-    marked_correct_options.each do |correct_option|
-      score += correct_option.question.score
-    end
-    score
-  end
-
   def complete_quiz
     self.score = compute_total_score
     self.status = 'completed'
@@ -58,6 +50,14 @@ class QuizRunner < ApplicationRecord
 
   def autocomplete_quiz
     QuizAutocompleteJob.set(wait_until: Time.now + quiz.time_limit_in_seconds).perform_later(self)
+  end
+
+  def compute_total_score
+    score = 0
+    marked_correct_options.each do |correct_option|
+      score += correct_option.question.score
+    end
+    score
   end
 
 end

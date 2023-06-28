@@ -17,7 +17,7 @@ module Quizathon
         line_items: [{
           price_data: {
             currency: @quiz.currency_code || Quizathon::CURRENCY_CODE,
-            unit_amount: @quiz.amount || Quizathon::QUIZ_AMOUNT,
+            unit_amount: @quiz.amount || Quizathon::DEFAULT_QUIZ_AMOUNT,
             product_data: {
               name: @quiz.title,
               description: @quiz.description,

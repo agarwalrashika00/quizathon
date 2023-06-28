@@ -7,6 +7,8 @@ class Payment < ApplicationRecord
   belongs_to :user
   belongs_to :quiz
 
+  validates :amount, numericality: { greater_than: 0 }
+
   after_create_commit :create_stripe_session
 
   def self.ransackable_attributes(auth_object = nil)
@@ -20,10 +22,10 @@ class Payment < ApplicationRecord
   private
 
   def create_stripe_session
-    session = Quizathon::StripePaymentProcessor.new(quiz_url(quiz, success: true), quiz_url(quiz), quiz, user).create_stripe_session
-    self.session_id = session.id
-    self.status = session[:payment_status]
-    self.stripe_session_url = session.url
+    stripe_session = Quizathon::StripePaymentProcessor.new(quiz_url(quiz, success: true), quiz_url(quiz), quiz, user).create_stripe_session
+    self.session_id = stripe_session.id
+    self.status = stripe_session.payment_status
+    self.stripe_session_url = stripe_session.url
     save
   end
 

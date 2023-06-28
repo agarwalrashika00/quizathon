@@ -8,6 +8,8 @@ class Comment < ApplicationRecord
 
   validate :single_level_nesting
 
+  after_create_commit :notify_parent_commenter
+
   scope :published, -> { where(published: true) }
 
   def publish
@@ -36,6 +38,10 @@ class Comment < ApplicationRecord
     if parent_comment&.parent_comment_id? || any_child_comment_has_child_comments? || (parent_comment.present? && child_comments.present?)
       errors.add :base, :nesting_level_too_deep, message: 'only one level of nesting is allowed'
     end
+  end
+
+  def notify_parent_commenter
+    Quizathon::NotificationsManager.new(user, parent_comment, commentable).notify_parent
   end
 
 end

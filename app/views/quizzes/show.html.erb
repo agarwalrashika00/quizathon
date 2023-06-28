@@ -2,14 +2,15 @@
 <br />
 <div class='ml-4 pl-4 mr-4 mb-4'>
   <h4> Comments:</h4>
-  <%= render @quiz.comments.published %>
+  <div class='all_comments'>
+    <%= render @quiz.comments.published %>
+  </div>
 </div>
 <div class="ml-4 pl-4 mr-4 mb-2">
   <%= form_with model: Comment.new, url: comment_quiz_path(@quiz) do |form| %>
     <div class="w-50">
       <%= form.rich_text_area :data, placeholer: 'Add new comment' %>
     </div>
-    <%= form.hidden_field :user_id, value: current_user&.id %>
     <%= form.submit 'Comment', class: 'mt-2 btn btn-primary' %>
   <% end %>
 </div>

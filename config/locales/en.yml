@@ -31,39 +31,28 @@
 
 en:
   hello: "Hello world"
-
   quiz_not_found: Quiz not found
-
   question_not_found: Question not found
-
   quiz_runner_not_found: Quiz runner not found
-
   title: Quizathon
-
   unauthorized_msg: Please sign_up/sign_in before continuing
-
   featured: Featured
-
   all_quizzes: 'All Quizzes'
-
   quizzes:
     index:
       welcome: Welcome
       stranger: Stranger
       to: to
-
     quiz_card:
       level: Level
       average_rating: Average Rating
       unrated: UNRATED
       show: Show
-
   admin:
     users:
       index:
         users: Users
         create_new: Create new
-
       filter:
         name_or_email: Name or email
         choose_role: Choose a role
@@ -71,7 +60,6 @@ en:
         confirmed: Confirmed?
         clear: Clear
         search: Search
-
   active_record:
     models:
       user: User

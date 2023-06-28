@@ -84,8 +84,6 @@ Rails.application.routes.draw do
 
       resources :checkouts, only: :create
     end
-
-    get 'my_quizzes', on: :collection
   end
 
   namespace :api, defaults: { format: 'json' } do
@@ -99,6 +97,7 @@ Rails.application.routes.draw do
   get '/profile', to: 'users#show'
   get '/profile/edit', to: 'users#edit', as: 'edit_user'
   put '/profile/edit', to: 'users#update'
+  get '/my_quizzes', to: 'users#my_quizzes'
 
   resources :notifications, only: :index
 end

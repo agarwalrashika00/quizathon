@@ -28,39 +28,28 @@
 
 es:
   hello: "Hello world"
-
   quiz_not_found: Quizaro na dere
-
   question_not_found: Questana na dere
-
   quiz_runner_not_found: Quizaro runnera na dere
-
   title: Quiizaathon
-
   unauthorized_msg: Regístrese/regístrese antes de continuar
-
   featured: Presentada
-
   all_quizzes: 'All Quizaros'
-
   quizzes:
     index:
       welcome: bienvenida
       stranger: extraño
       to: a
-
     quiz_card:
       level: Levelo
       average_rating: Avorag Rating
       unrated: Unrato
       show: espectáculo
-
   admin:
     users:
       index:
         users: Usuarias
         create_new: Creta nava
-
       filter:
         name_or_email: Nomero or emaila
         choose_role: Choosa rolero
@@ -68,7 +57,6 @@ es:
         confirmed: Comfirmo?
         clear: Claro
         search: Searcho
-
   active_record:
     models:
       user: User

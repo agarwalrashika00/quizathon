@@ -16,7 +16,7 @@
         <% end %>
       </h5>
       <%= t('.average_rating') %>
-      <% if quiz.average_rating == 'unrated' %>
+      <% unless quiz.average_rating %>
         <%= t('.unrated') %>
       <% else %>
         <h1 style="display: inline">

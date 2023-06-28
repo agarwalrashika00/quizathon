@@ -6,5 +6,6 @@ class Notification < ApplicationRecord
 
   scope :read, -> { where(read: true) }
   scope :unread, -> { where(read: false) }
+  scope :recent, -> { where(created_at: 2.days.ago..Time.current) }
 
 end
