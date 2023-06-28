@@ -6,4 +6,10 @@ class ActivableCallbacks
     end
   end
 
+  def self.before_save(model_object)
+    if model_object.active? && !model_object.publishable?
+      self.active = false
+    end
+  end
+
 end

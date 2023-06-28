@@ -7,7 +7,7 @@ module Controllers::Activable
   end
 
   def activate
-    if @model_instance.activate
+    if @model_instance.activate && @model_instance.active?
       flash[:alert] = "#{controller_name.classify} was successfully activated."
     else
       flash[:alert] = "#{controller_name.classify} cannot be activated."
