@@ -12,6 +12,8 @@ class Comment < ApplicationRecord
 
   scope :published, -> { where(published: true) }
 
+  scope :on_quizzes, -> { where(commentable_type: 'Quiz') }
+
   def publish
     update_column(:published, true)
   end
