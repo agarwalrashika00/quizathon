@@ -14,7 +14,7 @@ class QuestionOption < ApplicationRecord
   private
 
   def presence_of_either_data_or_image
-    unless option_image.present? && data.present?
+    if option_image.blank? && data.blank?
       errors.add :base, 'Both data and image can\'t be blank'
     end
   end

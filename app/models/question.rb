@@ -38,7 +38,7 @@ class Question < ApplicationRecord
   private
 
   def only_one_correct_option
-    unless question_options.correct.count == 1
+    unless question_options.map(&:correct).count(true) == 1
       errors.add :base, 'Choose exactly one correct option.'
     end
   end

@@ -2,5 +2,5 @@
   <%= form.text_field :data %>
   <%= form.hidden_field :parent_comment_id, value: parent_comment_id %>
   <%= form.submit 'Reply', class: 'btn btn-info' %>
-  <%= link_to 'Remove Comment field', '#', class: 'remove_fields', data: {id: form.object.object_id}, class: 'btn btn-secondary' %>
+  <%= link_to 'Remove Comment field', '#', class: 'remove_fields btn btn-secondary', data: {id: form.object.object_id} %>
 </fieldset>

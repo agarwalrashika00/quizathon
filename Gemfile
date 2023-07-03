@@ -70,6 +70,7 @@ group :development do
 
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
+  gem 'rspec-rails', '~> 4.1.0'
 end
 
 group :test do
@@ -77,4 +78,9 @@ group :test do
   gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
+  gem 'rspec-rails', '~> 4.1.0'
+  gem 'shoulda-matchers', '~> 5.0'
+  gem 'shoulda-callback-matchers', '~> 1.1.1'
+  gem 'rails-controller-testing'
+  gem 'factory_bot_rails'
 end
