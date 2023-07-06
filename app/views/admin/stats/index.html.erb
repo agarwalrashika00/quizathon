@@ -21,7 +21,7 @@
     <br />
     <ul class="list-group">
       <b>Quizzes :</b>
-      <% @stats_manager.quizzes_of_highest_scoring_participant.each do |quiz| %>
+      <% @stats_manager.highest_scoring_participant&.quizzes.each do |quiz| %>
         <li class="list-group-item"><%= quiz.title %></li>
       <% end %>
     </ul>
@@ -37,11 +37,11 @@
       <th class="text-center">Participants count</th>
       <th class="text-center">Revenue generated(Rs.)</th>
     </tr>
-    <% @stats_manager.quiz_users_count_hash.each do |quiz, users_count| %>
+    <% @stats_manager.quizzes_with_participants_count.each do |quiz| %>
       <tr>
         <td class="text-center"><%= quiz.title %></td>
-        <td class="text-center"><%= users_count %></td>
-        <td class="text-center"><%= quiz&.payments&.size.to_i * 5 %></td>
+        <td class="text-center"><%= quiz.users_count %></td>
+        <td class="text-center"><%= quiz.payments.size * 5 %></td>
       </tr>
     <% end %>
   </table>
