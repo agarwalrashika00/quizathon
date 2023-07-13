@@ -34,6 +34,10 @@
       <br />
       <%= form.file_field :quiz_banner %>
     </div>
+    <div class="field">
+      <%= form.label :amount %>
+      <%= form.number_field :amount %>
+    </div>
     <%= form.fields_for :quiz_questions do |quiz_questions_form| %>
       <%= render 'quiz_question_selector', f: quiz_questions_form, object: quiz_questions_form.object %>
     <% end %>
